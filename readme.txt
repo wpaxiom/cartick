@@ -3,7 +3,7 @@ Contributors: wpaxiom
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,9 @@ For help and support contact us at info@wpaxiom.com.
 To contribute to Cartick, fork the repository and submit a pull request. We welcome your contributions! (Upcoming)
 
 == Changelog ==
+
+= 1.0.2 =
+- Enabled High-Performance Order Storage (HPOS)
 
 = 1.0.1 =
 - Fixed data type declaration issue
