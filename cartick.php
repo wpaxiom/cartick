@@ -26,7 +26,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! defined( 'CARTICK_VERSION' ) ) {
-	define( 'CARTICK_VERSION', '1.0.0' );
+	define( 'CARTICK_VERSION', '1.0.2' );
 }
 
 if ( ! defined( 'CARTICK_FILE' ) ) {
