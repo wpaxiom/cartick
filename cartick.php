@@ -3,7 +3,7 @@
  * Plugin Name:       Cartick - Advanced Cart for WooCommerce
  * Plugin URI:        https://wpaxiom.com/cartick
  * Description:       Cartick is a powerful WordPress plugin designed exclusively for WooCommerce, enhancing your online store's user experience with a range of innovative cart features.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            WpAxiom
  * Author URI:        https://wpaxiom.com
  * License:           GPL-2.0+
@@ -19,7 +19,7 @@
  *
  * @package cartick
  * @author WpAxiom <info@wpaxiom.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 
