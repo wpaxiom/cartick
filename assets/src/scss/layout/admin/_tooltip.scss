@@ -1,0 +1,99 @@
+.cartick-wrap {
+    .cartick {
+        &-tooltip {
+            position: relative;
+            text-align: center;
+            width: 21px;
+            height: 21px;
+            cursor: help;
+
+            &:after {
+                content: attr( data-tooltip );
+                background-color: $cartick-heading;
+                border-radius: 10px;
+                color: #ffffff;
+                display: none;
+                padding: 10px 15px;
+                position: absolute;
+                text-align: center;
+                z-index: 999;
+            }
+
+            &:before {
+                content: '';
+                background-color: $cartick-heading;
+                display: none;
+                position: absolute;
+                width: 15px;
+                height: 15px;
+                z-index: 999;
+            }
+
+            &:hover {
+                &:before,
+                &:after {
+                    display: block;
+                }
+            }
+
+            // Top
+            &.top {
+                &:after {
+                    top: 0;
+                    left: 50%;
+                    transform: translate(-50%, calc(-100% - 10px));
+                }
+                &:before {
+                    top: 0;
+                    left: 50%;
+                    transform: translate(-50%, calc(-100% - 5px)) rotate(45deg);
+                }
+            }
+
+            // Bottom
+            &.bottom {
+                &:after {
+                    bottom: 0;
+                    left: 50%;
+                    transform: translate(-50%, calc(100% + 10px));
+                }
+
+                &:before {
+                    bottom: 0;
+                    left: 50%;
+                    transform: translate(-50%, calc(100% + 5px)) rotate(45deg);
+                }
+            }
+
+            // Left
+            &.left {
+                &:after {
+                    top: 0;
+                    left: 0;
+                    transform: translateX(calc(-100% - 10px));
+                }
+
+                &:before {
+                    top: 50%;
+                    left: 0;
+                    transform: translate(calc(-100% - 5px), -50%) rotate(45deg);
+                }
+            }
+
+            // Right
+            &.right {
+                &:after {
+                    top: 0;
+                    right: 0;
+                    transform: translateX(calc(100% + 10px));
+                }
+
+                &:before {
+                    top: 50%;
+                    right: 0;
+                    transform: translate(calc(100% + 5px), -50%) rotate(45deg);
+                }
+            }
+        }
+    }
+}

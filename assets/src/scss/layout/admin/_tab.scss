@@ -1,0 +1,139 @@
+/*
+// -------------------------------------------- //
+//                Admin tabs                 //
+// -------------------------------------------- //
+*/
+.cartick-wrap {
+	.cartick {
+		&-tab {
+			&__nav {
+				border-bottom: 1px solid rgba($cartick-primary, 0.15 );
+
+				&.mainTab {
+					background: $cartick-light;
+					border-top-left-radius: 5px;
+					border-top-right-radius: 5px;
+					ul {
+						li {
+							a {
+								padding: 0.875rem 2rem;
+								border-color: $cartick-light2;
+								border-style: solid;
+								border-width: 0 1px 0 1px;
+
+								&:focus,
+								&:active {
+									//border: transparent;
+									box-shadow: none;
+									outline: none;
+								}
+
+								&:before {
+									width: auto;
+									margin-right: 0.5rem;
+									height: 1.875rem;
+								}
+
+								&.general:before {
+									content: url("data:image/svg+xml,%3Csvg%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2030%2030%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M23.75%2015H26.25C28.75%2015%2030%2013.75%2030%2011.25V8.75C30%206.25%2028.75%205%2026.25%205H23.75C21.25%205%2020%206.25%2020%208.75V11.25C20%2013.75%2021.25%2015%2023.75%2015Z%22%20fill%3D%22%23C3C1FB%22%2F%3E%0A%3Cpath%20d%3D%22M8.75%2030H11.25C13.75%2030%2015%2028.75%2015%2026.25V23.75C15%2021.25%2013.75%2020%2011.25%2020H8.75C6.25%2020%205%2021.25%205%2023.75V26.25C5%2028.75%206.25%2030%208.75%2030Z%22%20fill%3D%22%23C3C1FB%22%2F%3E%0A%3Cpath%20d%3D%22M21.25%2012.5H23.75C26.25%2012.5%2027.5%2011.25%2027.5%208.75V6.25C27.5%203.75%2026.25%202.5%2023.75%202.5H21.25C18.75%202.5%2017.5%203.75%2017.5%206.25V8.75C17.5%2011.25%2018.75%2012.5%2021.25%2012.5Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M6.25%2027.5H8.75C11.25%2027.5%2012.5%2026.25%2012.5%2023.75V21.25C12.5%2018.75%2011.25%2017.5%208.75%2017.5H6.25C3.75%2017.5%202.5%2018.75%202.5%2021.25V23.75C2.5%2026.25%203.75%2027.5%206.25%2027.5Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M10%2015C12.7614%2015%2015%2012.7614%2015%2010C15%207.23858%2012.7614%205%2010%205C7.23858%205%205%207.23858%205%2010C5%2012.7614%207.23858%2015%2010%2015Z%22%20fill%3D%22%23C3C1FB%22%2F%3E%0A%3Cpath%20d%3D%22M25%2030C27.7614%2030%2030%2027.7614%2030%2025C30%2022.2386%2027.7614%2020%2025%2020C22.2386%2020%2020%2022.2386%2020%2025C20%2027.7614%2022.2386%2030%2025%2030Z%22%20fill%3D%22%23C3C1FB%22%2F%3E%0A%3Cpath%20d%3D%22M7.5%2012.5C10.2614%2012.5%2012.5%2010.2614%2012.5%207.5C12.5%204.73858%2010.2614%202.5%207.5%202.5C4.73858%202.5%202.5%204.73858%202.5%207.5C2.5%2010.2614%204.73858%2012.5%207.5%2012.5Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M22.5%2027.5C25.2614%2027.5%2027.5%2025.2614%2027.5%2022.5C27.5%2019.7386%2025.2614%2017.5%2022.5%2017.5C19.7386%2017.5%2017.5%2019.7386%2017.5%2022.5C17.5%2025.2614%2019.7386%2027.5%2022.5%2027.5Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A");
+								}
+
+								&.add-to-cart:before {
+									content: url("data:image/svg+xml,%3Csvg%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2030%2030%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%228%22%20y%3D%226%22%20width%3D%2222%22%20height%3D%2224%22%20rx%3D%225%22%20fill%3D%22%23C3C1FB%22%2F%3E%0A%3Cpath%20d%3D%22M26.2621%2014.025V19.6375C26.2621%2025.25%2024.0246%2027.5%2018.3996%2027.5H11.6622C10.9372%2027.5%2010.2746%2027.4625%209.66211%2027.375%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M3.7998%2019.4V14.025%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M15.0374%2015C17.3249%2015%2019.0124%2013.1376%2018.7874%2010.8501L17.9498%202.5H12.1124L11.2749%2010.8501C11.0499%2013.1376%2012.7499%2015%2015.0374%2015Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M22.9129%2015C25.4379%2015%2027.2879%2012.95%2027.0379%2010.4375L26.6879%206.99997C26.2379%203.74997%2024.9879%202.5%2021.7129%202.5H17.9004L18.7754%2011.2625C19.0004%2013.325%2020.8504%2015%2022.9129%2015Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M7.08773%2015C9.15023%2015%2011.0127%2013.325%2011.2127%2011.2625L11.4878%208.50006L12.0877%202.5H8.27525C5.00025%202.5%203.75027%203.74997%203.30027%206.99997L2.95023%2010.4375C2.70023%2012.95%204.56273%2015%207.08773%2015Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M11.25%2023.75C11.25%2024.6875%2010.9875%2025.5751%2010.525%2026.3251C10.2875%2026.7251%209.99998%2027.0875%209.66248%2027.375C9.62498%2027.425%209.58751%2027.4625%209.53751%2027.5C8.66251%2028.2875%207.5125%2028.75%206.25%2028.75C4.725%2028.75%203.36246%2028.0625%202.46246%2026.9875C2.43746%2026.95%202.40003%2026.925%202.37503%2026.8875C2.22503%2026.7125%202.08752%2026.5251%201.97502%2026.3251C1.51252%2025.5751%201.25%2024.6875%201.25%2023.75C1.25%2022.175%201.975%2020.7625%203.125%2019.85C3.3375%2019.675%203.56247%2019.525%203.79997%2019.4C4.52497%2018.9875%205.3625%2018.75%206.25%2018.75C7.5%2018.75%208.62497%2019.2%209.49997%2019.9625C9.64997%2020.075%209.78749%2020.2125%209.91249%2020.35C10.7375%2021.25%2011.25%2022.4375%2011.25%2023.75Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M8.11267%2023.725H4.3877%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M6.25%2021.9V25.6375%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A");
+								}
+
+								&.sticky-cart:before {
+									content: url("data:image/svg+xml,%3Csvg%20width%3D%2231%22%20height%3D%2230%22%20viewBox%3D%220%200%2031%2030%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M24.25%207.52499C28.4125%207.74999%2030.5%209.28749%2030.5%2015V22.5C30.5%2027.5%2029.25%2030%2023%2030H15.5C9.25%2030%208%2027.5%208%2022.5V15C8%209.29999%2010.0875%207.74999%2014.25%207.52499%22%20fill%3D%22%23C3C1FB%22%2F%3E%0A%3Cpath%20d%3D%22M10%2015.25H18.75%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M10%2020.25H15.475%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M12.5%207.5H17.5C20%207.5%2020%206.25%2020%205C20%202.5%2018.75%202.5%2017.5%202.5H12.5C11.25%202.5%2010%202.5%2010%205C10%207.5%2011.25%207.5%2012.5%207.5Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M20%205.02499C24.1625%205.24999%2026.25%206.78749%2026.25%2012.5V20C26.25%2025%2025%2027.5%2018.75%2027.5H11.25C5%2027.5%203.75%2025%203.75%2020V12.5C3.75%206.79999%205.8375%205.24999%2010%205.02499%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A");
+								}
+
+								&.off-canvas-cart:before {
+									content: url("data:image/svg+xml,%3Csvg%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2030%2030%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M9%2012L10.7418%2024.96C11.1371%2027.87%2012.0882%2030%2015.6212%2030H23.07C26.9118%2030%2027.48%2027.96%2027.9247%2025.14L30%2012%22%20fill%3D%22%23C3C1FB%22%2F%3E%0A%3Cpath%20d%3D%22M11.0123%202.5L6.4873%207.0375%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M18.9873%202.5L23.5123%207.0375%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M2.5%209.8125C2.5%207.5%203.7375%207.3125%205.275%207.3125H24.725C26.2625%207.3125%2027.5%207.5%2027.5%209.8125C27.5%2012.5%2026.2625%2012.3125%2024.725%2012.3125H5.275C3.7375%2012.3125%202.5%2012.5%202.5%209.8125Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%2F%3E%0A%3Cpath%20d%3D%22M12.2002%2017.5V21.9375%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M17.9502%2017.5V21.9375%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M4.375%2012.5L6.1375%2023.3C6.5375%2025.725%207.5%2027.5%2011.075%2027.5H18.6125C22.5%2027.5%2023.075%2025.8%2023.525%2023.45L25.625%2012.5%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A");
+								}
+
+								&.menu-cart:before {
+									content: url("data:image/svg+xml,%3Csvg%20width%3D%2231%22%20height%3D%2230%22%20viewBox%3D%220%200%2031%2030%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M26.7075%209.38994L11.5%209L10.41%2020.6266C10.19%2022.973%2012.0359%2025%2014.3925%2025H25.8684C27.9283%2025%2029.6514%2023.4356%2029.8498%2021.3853L30.5864%2013.7739C30.8099%2011.4641%2029.0274%209.44942%2026.7075%209.38994Z%22%20fill%3D%22%23C3C1FB%22%2F%3E%0A%3Cpath%20d%3D%22M2.5%202.5H4.67501C6.02501%202.5%207.0875%203.6625%206.975%205L5.9375%2017.45C5.7625%2019.4875%207.37499%2021.2375%209.42499%2021.2375H22.7375C24.5375%2021.2375%2026.1125%2019.7625%2026.25%2017.975L26.925%208.60001C27.075%206.52501%2025.5%204.83749%2023.4125%204.83749H7.27501%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M20.3125%2027.5C21.1754%2027.5%2021.875%2026.8004%2021.875%2025.9375C21.875%2025.0746%2021.1754%2024.375%2020.3125%2024.375C19.4496%2024.375%2018.75%2025.0746%2018.75%2025.9375C18.75%2026.8004%2019.4496%2027.5%2020.3125%2027.5Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M10.3125%2027.5C11.1754%2027.5%2011.875%2026.8004%2011.875%2025.9375C11.875%2025.0746%2011.1754%2024.375%2010.3125%2024.375C9.44956%2024.375%208.75%2025.0746%208.75%2025.9375C8.75%2026.8004%209.44956%2027.5%2010.3125%2027.5Z%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3Cpath%20d%3D%22M11.25%2010H26.25%22%20stroke%3D%22%23292D32%22%20stroke-width%3D%221.5%22%20stroke-miterlimit%3D%2210%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A");
+								}
+							}
+							&.active {
+								background-color: $cartick-light2;
+							}
+							&:last-child {
+								a {
+									border-right: none;
+								}
+							}
+						}
+					}
+				}
+
+				&.subTab {
+					background-color: $cartick-light;
+					border: 1px solid $cartick-light2;
+
+					ul {
+						li {
+							a {
+								padding: 7px 15px;
+								position: relative;
+							}
+							&.active {
+								a {
+									color: $cartick-primary;
+									background-color: $cartick-light2;
+
+									&:after {
+										content: "";
+										background-color: #C3C1FB;
+										position: absolute;
+										width: 100%;
+										height: 1px;
+										left: 0;
+										bottom: 0;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				ul {
+					display: flex;
+					flex-direction: row;
+					justify-content: flex-start;
+					grid-column: 1; /* take the explicit one */
+					li {
+						a {
+							font-family: $nunito;
+							font-weight: 500;
+							font-size: 0.9375em;
+							display: flex;
+							align-items: center;
+							color: $cartick-heading;
+							text-decoration: none;
+							box-shadow: none;
+							outline: none;
+							transition: background-color .5s ease-in-out;
+						}
+					}
+				}
+			}
+			&__content {
+				font-size: 0.875em;
+				background: $white;
+				padding: $cartick-gap-30;
+				border-radius: 0 0 5px 5px;
+				.tab-content {
+					display: none;
+
+					.tab-content {
+						padding: 15px 0;
+					}
+
+					&.active {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}

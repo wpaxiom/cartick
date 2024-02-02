@@ -1,0 +1,26 @@
+@import "utilities/settings";
+@import "utilities/reset";
+
+/*
+// -------------------------------------------- //
+//               OFF CANVAS CART                //
+// -------------------------------------------- //
+*/
+@import "layout/frontend/sticky-cart/common";
+
+/*
+// -------------------------------------------- //
+//               OFF CANVAS CART                //
+// -------------------------------------------- //
+*/
+@import "layout/frontend/off-canvas-cart/common";
+@import "layout/frontend/off-canvas-cart/heading";
+@import "layout/frontend/off-canvas-cart/items";
+
+
+/*
+// -------------------------------------------- //
+//               MENU CART                //
+// -------------------------------------------- //
+*/
+@import "layout/frontend/menu-cart/common";

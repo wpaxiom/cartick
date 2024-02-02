@@ -1,0 +1,52 @@
+/*
+// -------------------------------------------- //
+//             OFF CANVAS CART ITEMS            //
+// -------------------------------------------- //
+*/
+.cartick-wrap {
+    .cartick {
+        &-oc-cart {
+            &-item {
+                display: flex;
+                align-items: center;
+                padding: 1.25em 1.25em 0;
+            }
+
+            &-thumbnail {
+                width: 3.5em;
+                height: 3.5em;
+                margin-right: 1.25em;
+            }
+
+            &-content {
+                flex: auto;
+
+                h5 {
+                    color: $cartick-heading;
+                }
+
+                &-wrap {
+                    color: $cartick-text;
+                    width: 350px;
+                    position: fixed;
+                    top: 0;
+                    bottom: 0;
+                    left: -350px;
+                    background-color: $white;
+                    z-index: 999;
+                    transition: all 1s ease-in-out;
+                }
+            }
+
+            &-quantity {
+                flex: 0 auto;
+                width: 2.625em;
+                height: 2.625em;
+                border-radius: 0.3125em;
+                border: 1px solid $cartick-border;
+                line-height: 2.625em;
+                text-align: center;
+            }
+        }
+    }
+}

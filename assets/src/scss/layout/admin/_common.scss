@@ -1,0 +1,195 @@
+/*
+// -------------------------------------------- //
+//                Admin Common                 //
+// -------------------------------------------- //
+*/
+.cartick-wrap {
+    margin: $cartick-gap-30 $cartick-gap-30 $cartick-gap-30 $cartick-gap-10;
+
+    * {
+        font-family: $nunito;
+        box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: $poppins;
+    }
+
+    &__inner {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: repeat(2, auto);
+        grid-column-gap: 30px;
+        grid-row-gap: 30px;
+        grid-template-areas:
+        "h h h h h h h h h h h h h"
+        "c c c c c c c c c c c c c"
+        ;
+    }
+    &__loader {
+        position: absolute;
+        width: 1.5rem;
+        height: 1.5rem;
+        left: calc( 50% - 0.75rem );
+        top: calc( 50% - 0.75rem );
+        animation: spin 1s linear infinite;
+
+        &:before {
+            content: url("data:image/svg+xml,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M22%2012C22%2017.52%2017.52%2022%2012%2022C6.48%2022%203.11%2016.44%203.11%2016.44M3.11%2016.44H7.63M3.11%2016.44V21.44M2%2012C2%206.48%206.44%202%2012%202C18.67%202%2022%207.56%2022%207.56M22%207.56V2.56M22%207.56H17.56%22%20stroke%3D%22%231A171B%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A");
+        }
+
+        &-wrap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            background: #ffffff;
+            z-index: 99;
+        }
+    }
+
+    .cartick {
+        &-card {
+            border-radius: 5px;
+            border: 1px solid rgba($cartick-primary, 0.15 );
+        }
+        &-content {
+            grid-area: c;
+        }
+        &-section {
+            &__wrap {
+                display: flex;
+                padding: 30px 0;
+                border-bottom: 1px solid $cartick-light2;
+
+                &:first-child {
+                    padding-top: 0;
+                }
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                .cartick-field {
+                    &__wrap {
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+                    &__label {
+                        flex: 0 0 100%;
+                        width: 100%;
+                    }
+                    &__content {
+                        flex: 0 0 100%;
+                        width: 100%;
+                    }
+                }
+
+                .cartick-form-control {
+                    margin-bottom: 20px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .cartick-section__content {
+                    margin-top: 0;
+                    width: 80%;
+                }
+            }
+            &__heading {
+                display: block;
+                position: relative;
+                margin: 30px 0;
+                width: 20%;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+
+                h2 {
+                    font-size: 1.285em;
+                    font-weight: 500;
+                }
+
+                &.has-border {
+                    flex: 0 0 100%;
+                    width: 100%;
+                    margin-bottom: 15px;
+
+                    &:after{
+                        content: "";
+                        width: 100%;
+                        height: 1px;
+                        position: absolute;
+                        border-bottom: 1px solid $cartick-light2;
+                        bottom: -15px;
+                    }
+                }
+            }
+            &__content {
+                margin-top: 30px;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+        }
+        &-field {
+            &__wrap {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+            }
+            &__label {
+                width: 20%;
+                display: flex;
+                gap: 10px;
+            }
+            &__content {
+                width: 80%;
+            }
+        }
+        &-form-control {
+            padding: 15px 0;
+            min-height: 75px;
+            width: 100%;
+            align-items: center;
+            display: inline-grid;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            input {
+                background-color: $cartick-light;
+                border: 1px solid $cartick-light2;
+                border-radius: 3px;
+                padding: 7px 20px;
+
+                &:focus,
+                &:hover {
+                    border: 1px solid rgba($cartick-primary, 0.2 );
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0,0,0,0);
+        border: 0;
+    }
+    @keyframes spin {
+        100% {
+            transform:rotate(360deg);
+        }
+    }
+}

@@ -1,0 +1,30 @@
+/*
+// -------------------------------------------- //
+//             OFF CANVAS CART HEADING          //
+// -------------------------------------------- //
+*/
+.cartick-wrap {
+    .cartick {
+        &-oc-cart {
+            &-heading-wrap {
+                color: $cartick-heading;
+                display: flex;
+                align-items: center;
+                border-bottom: 1px solid $cartick-border;
+                padding: 0.875em 1.25em;
+
+                h2 {
+                    flex: auto;
+                    line-height: 1;
+                }
+
+                button {
+                    font-size: inherit;
+                    background-color: transparent;
+                    flex: 0 auto;
+                    padding: 0;
+                }
+            }
+        }
+    }
+}
