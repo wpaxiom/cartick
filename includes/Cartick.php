@@ -10,7 +10,7 @@
  *
  * @package cartick
  * @author WpAxiom <info@wpaxiom.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 
@@ -100,7 +100,7 @@ final class Cartick {
  *
  * @return false|cartick
  */
-function cartick(): Cartick|bool {
+function cartick() {
 	return Cartick::init();
 }
 

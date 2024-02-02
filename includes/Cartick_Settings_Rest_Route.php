@@ -4,7 +4,7 @@
  *
  * @package cartick
  * @author WpAxiom <info@wpaxiom.com>
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 
@@ -105,7 +105,7 @@ class Cartick_Settings_Rest_Route {
 	/**
 	 * Get Route Settings
 	 */
-	public function get_settings(): \WP_Error|\WP_REST_Response|\WP_HTTP_Response {
+	public function get_settings() {
 		return rest_ensure_response( get_option('cartick_options') );
 	}
 
@@ -119,7 +119,7 @@ class Cartick_Settings_Rest_Route {
 	/**
 	 * Save Route Settings
 	 */
-	public function save_settings( $res ): \WP_Error|\WP_REST_Response|\WP_HTTP_Response {
+	public function save_settings( $res ) {
 
 		$data_arr = $this->options_data();
 
