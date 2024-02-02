@@ -4,27 +4,12 @@
   "description": "=== Cartick - Advanced Cart for WooCommerce ===\r Contributors: wpaxiom\r Requires at least: 5.8\r Tested up to: 5.8.2\r Requires PHP: 7.3\r Stable tag: 1.0.0\r License: GPLv2 or later\r License URI: https://www.gnu.org/licenses/gpl-2.0.html",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo OK",
-    "test-orig": "eslint --quiet . && stylelint --syntax scss -q **/*.scss && composer run-script analyze && composer run-script phpcs:log",
-    "eslint-fix": "eslint --fix .",
-    "stylelint-fix": "stylelint --syntax scss --fix **/*.scss",
     "clean": "rm -rf build/*",
     "build": "wp-scripts build && npm run composer:build && npm run wp:i18n",
     "composer:build": "composer install --no-dev && composer dump-autoload -o",
     "wp:i18n": "wp i18n make-pot .",
-    "check-engines": "wp-scripts check-engines",
-    "check-licenses": "wp-scripts check-licenses",
-    "format": "wp-scripts format",
-    "lint:css": "wp-scripts lint-style",
-    "lint:js": "wp-scripts lint-js",
-    "lint:md:docs": "wp-scripts lint-md-docs",
-    "lint:md:js": "wp-scripts lint-md-js",
-    "lint:pkg-json": "wp-scripts lint-pkg-json",
-    "packages-update": "wp-scripts packages-update",
-    "plugin-zip": "wp-scripts plugin-zip",
     "start": "wp-scripts start",
-    "test:e2e": "wp-scripts test-e2e",
-    "test:unit": "wp-scripts test-unit-js"
+    "tailwind" : "npx tailwindcss -i ./assets/src/scss/utilities/base.css -o ./assets/dist/css/admin.css --watch"
   },
   "repository": {
     "type": "git",
@@ -64,7 +49,7 @@
     "rtlcss-webpack-plugin": "^4.0.7",
     "sass": "^1.36.0",
     "scss-reset": "^1.2.2",
-    "stylelint-config-wordpress": "^17.0.0"
-  },
-  "dependencies": {}
+    "stylelint-config-wordpress": "^17.0.0",
+    "tailwind": "^4.0.0"
+  }
 }
