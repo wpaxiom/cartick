@@ -45,6 +45,9 @@ final class Cartick {
 			new Frontend();
 		}
 		new Cartick_Settings_Rest_Route();
+
+		// Enable HPOS for WooCommerce
+		add_action( 'before_woocommerce_init', array( $this, 'enable_hpos' ) );
 	}
 
 	/**
@@ -91,6 +94,17 @@ final class Cartick {
 
 		if ( ! get_option( 'cartick_options' ) ) {
 			update_option( 'cartick_options', $data, true );
+		}
+	}
+
+	/**
+	 * Enable High-Performance Order Storage (HPOS)
+	 *
+	 * @return void
+	 */
+	public function enable_hpos() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', CARTICK_FILE, true );
 		}
 	}
 }
