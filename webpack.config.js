@@ -18,14 +18,40 @@ const reactConfig = {
 const assetsConfig = {
     ...defaultConfig,
     entry: {
-        'admin': ['./assets/src/js/admin.js', './assets/src/scss/admin.scss'],
-        'cartick': ['./assets/src/js/cartick.js', './assets/src/scss/cartick.scss']
+        'admin': ['./assets/src/js/admin.js', './assets/src/css/admin.css'],
+        //'cartick': ['./assets/src/js/cartick.js', './assets/src/css/cartick.scss']
     },
     output: {
         ...defaultConfig.output,
         filename: './js/[name].js',
         path: path.resolve( process.cwd(), 'assets/dist' ),
     },
+    module: {
+            rules: [
+                {
+                    test: /\.css$/i,
+                    use: [
+                        "style-loader",
+                        "css-loader",
+                        {
+                            loader: "postcss-loader",
+                            options: {
+                                postcssOptions: {
+                                    plugins: [
+                                        [
+                                            "postcss-preset-env",
+                                            {
+                                                // Options
+                                            },
+                                        ],
+                                    ],
+                                },
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
 
     plugins: [
         new MiniCSSExtractPlugin(
@@ -33,7 +59,7 @@ const assetsConfig = {
                 filename: "./css/[name].css"
             }
         ),
-    ]
+    ],
 }
 
 module.exports = [reactConfig, assetsConfig];
