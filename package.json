@@ -25,6 +25,7 @@
     "@babel/core": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "@mr-hope/gulp-sass": "^2.0.0",
+    "@savvywombat/tailwindcss-grid-areas": "^4.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",

@@ -2,7 +2,16 @@
 module.exports = {
     content: ["./src/**/*.{html,js}"],
     theme: {
-        extend: {},
+        extend: {
+            gridTemplateAreas: {
+                'layout': [
+                    'header header header header header header header header header header header header header',
+                    'content content content content content content content content content content content content content'
+                ],
+            },
+        },
     },
-    plugins: [],
+    plugins: [
+        require('@savvywombat/tailwindcss-grid-areas')
+    ]
 }
