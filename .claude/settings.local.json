@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer --version)",
+      "Bash(composer install *)",
+      "Bash(composer dump-autoload *)",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Cartick.php\")",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Frontend.php\")",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Admin.php\")",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Cartick_Settings_Rest_Route.php\")",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Core/Module.php\")",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Modules/Add_To_Cart/Module.php\")",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Modules/Menu_Cart/Module.php\")",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Modules/Off_Canvas_Cart/Module.php\")",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Admin/Rest/Modules_Controller.php\")",
+      "Bash(php -l \"C:/Users/Shuvo/Local Sites/wp/app/public/wp-content/plugins/cartick/includes/Admin/Rest/Settings_Controller.php\")",
+      "Bash(npx wp-scripts *)"
+    ]
+  }
+}

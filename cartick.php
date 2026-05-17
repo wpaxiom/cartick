@@ -38,7 +38,7 @@ if ( ! defined( 'CARTICK_PATH' ) ) {
 }
 
 if ( ! defined( 'CARTICK_URL' ) ) {
-	define( 'CARTICK_URL', plugins_url( 'cartick' ) );
+	define( 'CARTICK_URL', plugins_url( '', CARTICK_FILE ) );
 }
 
 if ( ! defined( 'CARTICK_ASSETS' ) ) {

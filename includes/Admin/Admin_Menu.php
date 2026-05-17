@@ -56,8 +56,10 @@ class Admin_Menu {
 		wp_enqueue_style( 'cartick-nunito-font', 'https://fonts.googleapis.com/css2?family=Nunito:wght@400;500&display=swap', array(), CARTICK_VERSION );
 		wp_enqueue_style( 'cartick-poppins-font', 'https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap', array(), CARTICK_VERSION );
 		wp_enqueue_style( 'cartick-admin', CARTICK_ASSETS . '/dist/css/admin.css', array(), CARTICK_VERSION );
+		// Stopgap: jQuery handles admin tab nav until the tabs are migrated
+		// to React state. Remove this enqueue once the admin is refactored.
 		wp_enqueue_script( 'cartick-admin', CARTICK_ASSETS . '/dist/js/admin.js', array( 'jquery' ), CARTICK_VERSION, true );
-		wp_enqueue_script( 'admin-js', CARTICK_URL . '/build/index.js', array( 'jquery', 'wp-element' ), CARTICK_VERSION, true );
+		wp_enqueue_script( 'admin-js', CARTICK_URL . '/build/index.js', array( 'wp-element' ), CARTICK_VERSION, true );
 		wp_localize_script( 'admin-js', 'cartickAdminSettings', array(
 			'url'     => esc_url_raw( rest_url() ),
 			'nonce'   => wp_create_nonce( 'wp_rest' ),

@@ -16,46 +16,89 @@
 
 namespace WpAxiom\Cartick;
 
+use WpAxiom\Cartick\Admin\Rest\Modules_Controller;
+use WpAxiom\Cartick\Admin\Rest\Settings_Controller;
+use WpAxiom\Cartick\Core\Migrator;
+use WpAxiom\Cartick\Core\Module_Registry;
+use WpAxiom\Cartick\Core\Settings_Manager;
 use WpAxiom\Cartick\Traits\Singleton;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Initialize Class Cartick
+ * Plugin bootstrapper: wires the settings store, runs migrations, builds the
+ * module registry, and boots enabled modules on plugins_loaded.
  */
 final class Cartick {
 
-	use singleton;
+	use Singleton;
 
-	/**
-	 * Cartick Class Constructor
-	 */
+	private const OPTION_PREFIX = 'cartick';
+
+	private Settings_Manager $settings_manager;
+	private Module_Registry $module_registry;
+
 	public function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'init_data' ) );
+		$this->settings_manager = new Settings_Manager( self::OPTION_PREFIX );
+		$this->module_registry  = new Module_Registry( $this->settings_manager );
+
+		add_action( 'plugins_loaded', array( $this, 'init_legacy_data' ) );
 		add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
 	}
 
-	/**
-	 * Initialize Plugin
-	 */
+	public function settings_manager(): Settings_Manager {
+		return $this->settings_manager;
+	}
+
+	public function module_registry(): Module_Registry {
+		return $this->module_registry;
+	}
+
 	public function init_plugin(): void {
+		( new Migrator( self::OPTION_PREFIX, $this->settings_manager ) )->run();
+
+		$this->register_modules();
+		$this->module_registry->boot();
+
 		if ( is_admin() ) {
 			new Admin();
 		} else {
 			new Frontend();
 		}
+
+		// New module-aware REST API.
+		( new Modules_Controller( $this->module_registry ) )->register();
+		( new Settings_Controller( $this->module_registry ) )->register();
+
+		// Legacy /cartick/v1/settings endpoint, kept until the React admin
+		// is migrated to the new endpoints. Remove once the admin rewrite
+		// ships.
 		new Cartick_Settings_Rest_Route();
 
-		// Enable HPOS for WooCommerce
 		add_action( 'before_woocommerce_init', array( $this, 'enable_hpos' ) );
 	}
 
 	/**
-	 * Initialize plugin data
-	 *
-	 * @return void
+	 * Register every module class. Adding a new feature: drop a new
+	 * Modules/<name>/Module.php, then add one line here.
 	 */
-	public function init_data(): void {
+	private function register_modules(): void {
+		$this->module_registry->register( \WpAxiom\Cartick\Modules\Sticky_Cart\Module::class );
+		$this->module_registry->register( \WpAxiom\Cartick\Modules\Add_To_Cart\Module::class );
+		$this->module_registry->register( \WpAxiom\Cartick\Modules\Menu_Cart\Module::class );
+		$this->module_registry->register( \WpAxiom\Cartick\Modules\Off_Canvas_Cart\Module::class );
+	}
+
+	/**
+	 * Seed the legacy `cartick_options` row on first install. Kept until the
+	 * remaining features (cart button, menu cart, off-canvas) are converted
+	 * to modules. The Migrator splits this into per-module rows on first run.
+	 */
+	public function init_legacy_data(): void {
+		if ( get_option( 'cartick_options' ) ) {
+			return;
+		}
+
 		$data = array(
 			'cart_btn'    => array(
 				'simple_text'          => 'Add to cart',
@@ -92,29 +135,17 @@ final class Cartick {
 			),
 		);
 
-		if ( ! get_option( 'cartick_options' ) ) {
-			update_option( 'cartick_options', $data, true );
-		}
+		update_option( 'cartick_options', $data, true );
 	}
 
-	/**
-	 * Enable High-Performance Order Storage (HPOS)
-	 *
-	 * @return void
-	 */
-	public function enable_hpos() {
+	public function enable_hpos(): void {
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', CARTICK_FILE, true );
 		}
 	}
 }
 
-/**
- * Initialize main plugin
- *
- * @return false|cartick
- */
-function cartick() {
+function cartick(): Cartick {
 	return Cartick::init();
 }
 

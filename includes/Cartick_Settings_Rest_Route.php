@@ -110,10 +110,13 @@ class Cartick_Settings_Rest_Route {
 	}
 
 	/**
-	 * Save Route Settings
+	 * Permission check for reading settings.
+	 *
+	 * Settings can include sensitive UI strings and custom CSS; restrict to
+	 * users who can manage WooCommerce (or admins on non-WC sites).
 	 */
 	public function get_permission_settings(): bool {
-		return true;
+		return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
 	}
 
 	/**
@@ -136,10 +139,13 @@ class Cartick_Settings_Rest_Route {
 	}
 
 	/**
-	 * Save Route Settings
+	 * Permission check for writing settings.
+	 *
+	 * Plugin settings must not be writable by Authors. Require WooCommerce
+	 * management capability (or admin) — same gate used for reads.
 	 */
 	public function save_permission_settings(): bool {
-		return current_user_can( 'publish_posts' );
+		return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
 	}
 
 }

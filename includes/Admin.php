@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 class Admin {
 
-	private static $loaaded = false;
+	private static $loaded = false;
 
 	/**
 	 * Initialize Admin Menu
@@ -39,11 +39,11 @@ class Admin {
 	 * @return void
 	 */
 	public function init_classes(): void {
-		if ( self::$loaaded ) {
+		if ( self::$loaded ) {
 			return;
 		}
 
-		self::$loaaded = true;
+		self::$loaded = true;
 
 		new Admin_Menu();
 	}
