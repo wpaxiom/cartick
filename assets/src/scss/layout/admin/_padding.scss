@@ -22,7 +22,8 @@
 					background-color: $cartick-light2;
 					position: absolute;
 					left: 2px;
-					top: 1px;
+					top: 50%;
+					transform: translateY(-50%);
 					height: 42px;
 					width: 42px;
 					background-repeat: no-repeat;

@@ -41,18 +41,6 @@
         color: $cartick-heading;
     }
 
-    /* Dashboard's brand mark (small indigo squircle holding the icon). */
-    .cartick-brand-mark {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 28px;
-        height: 28px;
-        background: $cartick-primary;
-        border-radius: 6px;
-        color: #fff;
-    }
-
     /* Save-status dot — neutral by default; tint per state. */
     .cartick-save-dot {
         display: inline-block;
