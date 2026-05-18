@@ -1,0 +1,43 @@
+/*
+// -------------------------------------------- //
+//   Feature page module-row strip
+//   Literal translation of compact-fields.html
+// -------------------------------------------- //
+*/
+.cartick-wrap {
+
+    .cartick-module-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 14px 28px;
+        background: $cartick-light;
+        border-bottom: 1px solid $cartick-border;
+    }
+
+    .cartick-module-row__desc {
+        color: $cartick-text;
+        font-size: 13px;
+        min-width: 0;
+    }
+
+    .cartick-module-row__toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-shrink: 0;
+    }
+
+    .cartick-module-row__state {
+        font-family: $poppins;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        color: $cartick-text;
+
+        &.is-on {
+            color: $cartick-success;
+        }
+    }
+}

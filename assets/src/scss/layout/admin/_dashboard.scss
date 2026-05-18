@@ -1,0 +1,27 @@
+/*
+// -------------------------------------------- //
+//  Dashboard inner rows
+//  Literal translation of dashboard-cards.html
+// -------------------------------------------- //
+*/
+.cartick-wrap {
+
+    .cartick-dashboard__summary {
+        padding: 14px 28px;
+        font-size: 13px;
+        color: $cartick-text;
+        border-bottom: 1px solid $cartick-border;
+
+        strong {
+            color: $cartick-heading;
+            font-weight: 600;
+        }
+    }
+
+    .cartick-dashboard__grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        padding: 20px;
+    }
+}

@@ -1,0 +1,156 @@
+/*
+// -------------------------------------------- //
+//             Dashboard feature card           //
+// -------------------------------------------- //
+*/
+
+.cartick-wrap {
+
+    /* Plain-button toggle used on cards and the feature header strip.
+       Distinct from the form Switch component (which wraps a checkbox).
+       This is a pure visual toggle driven by React props. */
+    .cartick-toggle {
+        position: relative;
+        width: 32px;
+        height: 18px;
+        background: #d6d6e1;
+        border-radius: 999px;
+        border: 0;
+        padding: 0;
+        flex-shrink: 0;
+        cursor: pointer;
+        transition: background 120ms;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            transition: left 140ms;
+        }
+
+        &.is-on {
+            background: $cartick-primary;
+
+            &::after {
+                left: 16px;
+            }
+        }
+
+        &:focus,
+        &:hover {
+            outline: none;
+            box-shadow: none;
+        }
+
+        &--lg {
+            width: 38px;
+            height: 22px;
+
+            &::after {
+                width: 18px;
+                height: 18px;
+            }
+
+            &.is-on::after {
+                left: 18px;
+            }
+        }
+    }
+
+    .cartick-fcard {
+        background: $cartick-light;
+        border: 1px solid $cartick-border;
+        border-radius: 6px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-height: 138px;
+        transition: border-color 120ms, box-shadow 120ms;
+
+        &:hover {
+            border-color: rgba($cartick-primary, 0.3);
+            box-shadow: 0 1px 4px rgba($cartick-heading, 0.04);
+        }
+
+        &.is-off {
+            opacity: 0.78;
+        }
+
+        &__head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        &__title {
+            font-family: $poppins;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.3;
+            color: $cartick-heading;
+        }
+
+        &__desc {
+            color: $cartick-text;
+            font-size: 12.5px;
+            line-height: 1.45;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        &__foot {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 8px;
+        }
+
+        &__configure {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: transparent;
+            border: 0;
+            padding: 0;
+            color: $cartick-primary;
+            font-family: $nunito;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            line-height: 1;
+
+            &:hover {
+                color: darken($cartick-primary, 8%);
+
+                .cartick-fcard__configure-arrow {
+                    transform: translateX(2px);
+                }
+            }
+
+            &:focus {
+                outline: none;
+                box-shadow: none;
+            }
+        }
+
+        &__configure-arrow {
+            display: inline-block;
+            flex-shrink: 0;
+            transition: transform 120ms;
+            stroke: currentColor;
+        }
+    }
+}

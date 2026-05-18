@@ -1,18 +1,95 @@
 /*
 // -------------------------------------------- //
-//                 Admin Header                 //
+//  Page-head (shared by Dashboard & FeatureView)
+//  Literal translation of compact-fields.html / dashboard-cards.html
 // -------------------------------------------- //
 */
 .cartick-wrap {
-    .cartick {
-        &-header {
-            background: #ffffff;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 5px;
-            grid-area: h;
+
+    .cartick-page-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 28px;
+        border-bottom: 1px solid $cartick-border;
+    }
+
+    .cartick-page-head__left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+    }
+
+    .cartick-page-head__right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: $cartick-text;
+        font-size: 12px;
+    }
+
+    .cartick-page-head__version {
+        font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    }
+
+    .cartick-page-title {
+        font-family: $poppins;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+        color: $cartick-heading;
+    }
+
+    /* Dashboard's brand mark (small indigo squircle holding the icon). */
+    .cartick-brand-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: $cartick-primary;
+        border-radius: 6px;
+        color: #fff;
+    }
+
+    /* Save-status dot — neutral by default; tint per state. */
+    .cartick-save-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: $cartick-text;
+
+        &.is-saving { background: $cartick-info; }
+        &.is-saved  { background: $cartick-success; }
+        &.is-error  { background: $cartick-error; }
+    }
+
+    /* Back button — mockup verbatim. */
+    .cartick-back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border: 1px solid $cartick-border;
+        background: $cartick-light;
+        border-radius: 4px;
+        color: $cartick-heading;
+        font-family: $nunito;
+        font-size: 13px;
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: none;
+        outline: none;
+
+        &:hover {
+            border-color: rgba($cartick-primary, 0.3);
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba($cartick-primary, 0.15);
         }
     }
 }

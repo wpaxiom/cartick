@@ -17,15 +17,18 @@
 
     &__inner {
         position: relative;
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: repeat(2, auto);
-        grid-column-gap: 30px;
-        grid-row-gap: 30px;
-        grid-template-areas:
-        "h h h h h h h h h h h h h"
-        "c c c c c c c c c c c c c"
-        ;
+        display: block;
+    }
+
+    /* Unified card — matches compact-fields.html .wrap exactly. */
+    .cartick-shell {
+        max-width: 760px;
+        width: 100%;
+        margin: 0 auto;
+        background: #fff;
+        border: 1px solid $cartick-border;
+        border-radius: 6px;
+        overflow: hidden;
     }
     &__loader {
         position: absolute;
@@ -61,7 +64,7 @@
         &-section {
             &__wrap {
                 display: flex;
-                padding: 30px 0;
+                padding: 16px 0;
                 border-bottom: 1px solid $cartick-light2;
 
                 &:first-child {
@@ -74,7 +77,7 @@
                 .cartick-field {
                     &__wrap {
                         flex-wrap: wrap;
-                        gap: 10px;
+                        gap: 6px;
                     }
                     &__label {
                         flex: 0 0 100%;
@@ -87,7 +90,7 @@
                 }
 
                 .cartick-form-control {
-                    margin-bottom: 20px;
+                    margin-bottom: 8px;
 
                     &:last-child {
                         margin-bottom: 0;
@@ -153,8 +156,8 @@
             }
         }
         &-form-control {
-            padding: 15px 0;
-            min-height: 75px;
+            padding: 6px 0;
+            min-height: 36px;
             width: 100%;
             align-items: center;
             display: inline-grid;
@@ -167,7 +170,7 @@
                 background-color: $cartick-light;
                 border: 1px solid $cartick-light2;
                 border-radius: 3px;
-                padding: 7px 20px;
+                padding: 7px 12px;
 
                 &:focus,
                 &:hover {
