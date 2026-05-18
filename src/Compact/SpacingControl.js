@@ -91,7 +91,6 @@ const SpacingControl = ( { label = 'PADDING', values, defaults, onChange } ) => 
     return (
         <div className="cartick-sp-control">
             <div className="cartick-sp-label-row">
-                <span className="cartick-sp-label">{ label }</span>
                 <div className="cartick-sp-actions">
                     <button
                         type="button"
