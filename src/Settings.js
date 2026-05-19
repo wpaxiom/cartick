@@ -2,14 +2,18 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Api from "./Utilites/Api";
 import Dashboard from "./Dashboard";
 import FeatureView from "./FeatureView";
+import Sidebar from "./Sidebar";
 import MODULES, { isModuleEnabled } from "./modules";
+import { viewToHref, navigateToView } from "./Utilites/urls";
 
 const AUTOSAVE_DEBOUNCE_MS = 600;
 
+/* global cartickAdminSettings */
+
 function Settings(){
-    const [pageLoader, setPageLoader] = useState('cartick-wrap__loader');
+    const initialView = ( typeof cartickAdminSettings !== 'undefined' && cartickAdminSettings.view ) || 'dashboard';
     const [settings, setSettings] = useState(null);
-    const [view, setView] = useState('dashboard');
+    const [view, setView] = useState(initialView);
     const [saveStatus, setSaveStatus] = useState('idle');
     const saveTimer = useRef(null);
     const settingsRef = useRef(null);
@@ -19,7 +23,6 @@ function Settings(){
     useEffect(() => {
         Api.get('/cartick/v1/settings').then((res) => {
             setSettings(res.data || null);
-            setPageLoader('');
         });
     }, []);
 
@@ -68,8 +71,8 @@ function Settings(){
         updateField(group, field, enabled);
     };
 
-    const handleConfigure = (mod) => setView(mod.id);
-    const handleBack = () => setView('dashboard');
+    const handleConfigure = (mod) => navigateToView(mod.id);
+    const handleBack = () => navigateToView('dashboard');
 
     const currentModule = view === 'dashboard'
         ? null
@@ -77,31 +80,29 @@ function Settings(){
 
     return (
         <div className="cartick-wrap__inner">
-            { pageLoader && (
-                <div className="cartick-wrap__loader-wrap">
-                    <div className={pageLoader}></div>
-                </div>
-            ) }
             <div className="cartick-shell">
-                { view === 'dashboard' && (
-                    <Dashboard
-                        settings={settings}
-                        saveStatus={saveStatus}
-                        onToggle={handleToggle}
-                        onConfigure={handleConfigure}
-                    />
-                ) }
-                { view !== 'dashboard' && currentModule && (
-                    <FeatureView
-                        module={currentModule}
-                        enabled={isModuleEnabled(settings, currentModule)}
-                        values={settings ? settings[currentModule.settingsKey] : null}
-                        saveStatus={saveStatus}
-                        onBack={handleBack}
-                        onToggle={handleToggle}
-                        onFieldChange={(field, value) => updateField(currentModule.settingsKey, field, value)}
-                    />
-                ) }
+                <Sidebar view={view} onNavigate={navigateToView} />
+                <main className="cartick-shell__main">
+                    { view === 'dashboard' && (
+                        <Dashboard
+                            settings={settings}
+                            saveStatus={saveStatus}
+                            onToggle={handleToggle}
+                            onConfigure={handleConfigure}
+                        />
+                    ) }
+                    { view !== 'dashboard' && currentModule && (
+                        <FeatureView
+                            module={currentModule}
+                            enabled={isModuleEnabled(settings, currentModule)}
+                            values={settings ? settings[currentModule.settingsKey] : null}
+                            saveStatus={saveStatus}
+                            onBack={handleBack}
+                            onToggle={handleToggle}
+                            onFieldChange={(field, value) => updateField(currentModule.settingsKey, field, value)}
+                        />
+                    ) }
+                </main>
             </div>
         </div>
     );

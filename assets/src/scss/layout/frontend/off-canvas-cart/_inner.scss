@@ -12,8 +12,8 @@
     .cartick-oc-cart-heading-wrap {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
-        padding: 1.125rem 1.25rem;
+        gap: 10px;
+        padding: 18px 20px 14px;
         border-bottom: 1px solid $cartick-border;
         background: #fff;
 
@@ -28,14 +28,17 @@
         }
 
         .cartick-oc-cart-header-count {
+            display: inline-flex;
+            align-items: center;
+            height: 22px;
+            padding: 0 8px;
             font-family: $nunito;
-            font-size: 0.8125rem;
-            font-weight: 500;
-            color: $cartick-text;
-            background: $cartick-light2;
-            padding: 0.15rem 0.55rem;
-            border-radius: 999px;
-            line-height: 1.3;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: $cartick-neutral-400;
+            background: $cartick-neutral-100;
+            border-radius: $cartick-r-pill;
+            line-height: 1;
         }
     }
 
@@ -44,19 +47,19 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         padding: 0;
         background: transparent;
         border: 0;
-        border-radius: 6px;
-        color: $cartick-text;
+        border-radius: $cartick-r-2;
+        color: $cartick-neutral-400;
         cursor: pointer;
         transition: background-color 120ms, color 120ms;
 
         &:hover,
         &:focus-visible {
-            background: $cartick-light2;
+            background: $cartick-neutral-100;
             color: $cartick-heading;
             outline: none;
         }
@@ -71,12 +74,13 @@
     .cartick-oc-cart-items {
         flex: 1;
         overflow-y: auto;
-        padding: 0.5rem 0;
+        padding: 4px 8px;
         list-style: none;
         margin: 0;
 
-        /* Pretty scrollbar (webkit/blink). */
-        &::-webkit-scrollbar { width: 6px; }
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
         &::-webkit-scrollbar-thumb {
             background: rgba($cartick-text, 0.25);
             border-radius: 3px;
@@ -84,11 +88,10 @@
     }
 
     .cartick-oc-cart-item {
-        display: grid;
-        grid-template-columns: 64px 1fr auto;
-        gap: 0.875rem;
-        padding: 0.875rem 1.25rem;
-        border-bottom: 1px solid $cartick-border;
+        display: flex;
+        gap: 12px;
+        padding: 12px;
+        border-bottom: 1px dashed $cartick-border;
         position: relative;
 
         &:last-child {
@@ -97,8 +100,9 @@
 
         &__thumb {
             width: 64px;
-            height: 64px;
-            border-radius: 8px;
+            height: 72px;
+            flex: 0 0 auto;
+            border-radius: $cartick-r-2;
             overflow: hidden;
             background: $cartick-light;
             border: 1px solid $cartick-border;
@@ -112,20 +116,32 @@
         }
 
         &__body {
+            flex: 1;
             min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
+            /* Grid lets us put qty + price on the same bottom row without
+               touching the PHP markup (PHP renders body children as:
+               name → [meta] → price → qty). */
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-areas:
+                "name  name"
+                "meta  meta"
+                "qty   price";
+            row-gap: 6px;
+            column-gap: 8px;
+            align-content: start;
         }
 
         &__name {
+            grid-area: name;
             font-family: $poppins;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             font-weight: 600;
-            line-height: 1.3;
+            line-height: 1.35;
             color: $cartick-heading;
             margin: 0;
             text-decoration: none;
+            padding-right: 22px; /* leave room for the remove icon */
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -136,79 +152,160 @@
             }
         }
 
+        /* Variation / item meta — WooCommerce emits a <dl> with dt/dd
+           pairs. `display: contents` flattens the <dl> so its children
+           participate directly in the meta flex, giving us per-pair
+           control over spacing. */
         &__meta {
-            font-size: 0.75rem;
+            grid-area: meta;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px 0;
+            font-size: 0.6875rem;
             color: $cartick-text;
             line-height: 1.3;
-        }
 
-        &__price {
-            font-family: $poppins;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: $cartick-heading;
-            margin-top: 0.15rem;
-        }
-
-        &__qty {
-            grid-column: 2;
-            display: inline-flex;
-            align-items: center;
-            margin-top: 0.4rem;
-            border: 1px solid $cartick-border;
-            border-radius: 6px;
-            overflow: hidden;
-            background: $cartick-light;
-            width: fit-content;
-
-            button {
-                width: 26px;
-                height: 26px;
-                border: 0;
-                background: transparent;
-                color: $cartick-text;
-                cursor: pointer;
-                font-size: 14px;
-                line-height: 1;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                transition: color 120ms, background-color 120ms;
-
-                &:hover { color: $cartick-primary; background: $cartick-light2; }
+            dl,
+            .variation {
+                display: contents;
+                margin: 0;
+                padding: 0;
             }
 
-            input {
-                width: 34px;
-                height: 26px;
-                border: 0;
-                background: transparent;
-                text-align: center;
+            dt,
+            .variation-key {
+                display: inline-flex;
+                align-items: center;
+                margin: 0 3px 0 0;
                 font-family: $nunito;
-                font-size: 0.8125rem;
+                font-size: 0.6875rem;
+                font-weight: 500;
+                color: $cartick-text;
+
+                &::after {
+                    content: ':';
+                }
+            }
+
+            dd,
+            .variation-value {
+                display: inline-flex;
+                align-items: center;
+                height: 20px;
+                padding: 0 8px;
+                margin: 0 8px 0 0;
+                border-radius: $cartick-r-pill;
+                background: $cartick-neutral-100;
+                font-family: $nunito;
+                font-size: 0.6875rem;
                 font-weight: 600;
                 color: $cartick-heading;
-                -moz-appearance: textfield;
-                outline: none;
 
-                &::-webkit-inner-spin-button,
-                &::-webkit-outer-spin-button {
-                    -webkit-appearance: none;
+                /* WC sometimes wraps the value in a <p>. */
+                p {
                     margin: 0;
+                    line-height: 1;
                 }
             }
         }
 
+        &__qty {
+            grid-area: qty;
+            margin-top: 2px;
+            display: inline-flex;
+            align-items: center;
+            justify-self: start;
+        }
+
+        &__price {
+            grid-area: price;
+            font-family: $poppins;
+            font-weight: 600;
+            font-size: 0.8125rem;
+            color: $cartick-heading;
+            justify-self: end;
+            align-self: center;
+            white-space: nowrap;
+
+            del { opacity: 0.55; font-weight: 500; margin-right: 4px; }
+            ins { text-decoration: none; }
+        }
+
+        /* Quantity stepper styled as a single inline group */
+        .cartick-oc-qty-minus,
+        .cartick-oc-qty-plus {
+            width: 24px;
+            height: 26px;
+            border: 1px solid $cartick-border;
+            background: #fff;
+            color: $cartick-neutral-400;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 120ms, background-color 120ms;
+            padding: 0;
+        }
+
+        .cartick-oc-qty-minus {
+            border-radius: $cartick-r-2 0 0 $cartick-r-2;
+            border-right-width: 0;
+        }
+
+        .cartick-oc-qty-plus {
+            border-radius: 0 $cartick-r-2 $cartick-r-2 0;
+            border-left-width: 0;
+        }
+
+        .cartick-oc-qty-minus:hover,
+        .cartick-oc-qty-plus:hover {
+            color: $cartick-primary;
+            background: $cartick-light2;
+        }
+
+        .cartick-oc-qty-input {
+            width: 32px;
+            height: 26px;
+            border-top: 1px solid $cartick-border;
+            border-bottom: 1px solid $cartick-border;
+            border-left: 0;
+            border-right: 0;
+            background: #fff;
+            text-align: center;
+            font-family: $mono;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: $cartick-heading;
+            -moz-appearance: textfield;
+            outline: none;
+            padding: 0;
+            box-shadow: 0 1px 1px rgba(20, 23, 27, 0.04);
+
+            &::-webkit-inner-spin-button,
+            &::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }
+
         &__remove {
-            grid-column: 3;
-            grid-row: 1 / span 2;
-            align-self: start;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background: transparent;
             border: 0;
-            padding: 4px;
+            padding: 0;
             color: $cartick-text;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: $cartick-r-1;
             transition: color 120ms, background-color 120ms;
 
             &:hover {
@@ -216,15 +313,19 @@
                 background: rgba($cartick-error, 0.08);
             }
 
-            svg { width: 16px; height: 16px; display: block; }
+            svg {
+                width: 14px;
+                height: 14px;
+                display: block;
+            }
         }
     }
 
     /* ─── Footer ─── */
     .cartick-oc-cart-footer {
         border-top: 1px solid $cartick-border;
-        padding: 1rem 1.25rem 1.25rem;
-        background: #fff;
+        padding: 14px 20px 18px;
+        background: $cartick-light;
         flex: 0 0 auto;
     }
 
@@ -232,20 +333,20 @@
         display: flex;
         align-items: baseline;
         justify-content: space-between;
-        margin-bottom: 0.9rem;
+        padding-bottom: 10px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid $cartick-border;
 
         &__label {
             font-family: $nunito;
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             font-weight: 500;
-            color: $cartick-text;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
+            color: $cartick-neutral-400;
         }
 
         &__value {
             font-family: $poppins;
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 700;
             color: $cartick-heading;
         }
@@ -253,44 +354,47 @@
 
     .cartick-oc-cart-actions {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 8px;
 
-        a, button {
+        a,
+        button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            height: 42px;
-            padding: 0 0.75rem;
+            height: 44px;
+            padding: 0 14px;
             font-family: $poppins;
             font-size: 0.8125rem;
             font-weight: 600;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: $cartick-r-3;
             border: 1px solid transparent;
             cursor: pointer;
-            transition: background-color 120ms, color 120ms, border-color 120ms, transform 120ms;
+            transition: background-color 160ms, color 160ms, border-color 160ms, transform 160ms, box-shadow 160ms;
             white-space: nowrap;
         }
 
         .cartick-oc-cart-view {
-            background: $white;
-            border-color: $cartick-border;
+            background: #fff;
+            border-color: $cartick-neutral-200;
             color: $cartick-heading;
 
             &:hover {
-                border-color: rgba($cartick-primary, 0.4);
-                color: $cartick-primary;
+                border-color: $cartick-neutral-300;
+                color: $cartick-primary-700;
             }
         }
 
         .cartick-oc-cart-checkout {
             background: $cartick-primary;
             color: #fff;
+            box-shadow: 0 4px 14px rgba(107, 102, 247, 0.30);
 
             &:hover {
-                background: darken($cartick-primary, 6%);
+                background: $cartick-primary-700;
                 transform: translateY(-1px);
+                box-shadow: 0 6px 18px rgba(107, 102, 247, 0.36);
             }
         }
     }
@@ -303,21 +407,24 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: 2rem 1.5rem;
+        padding: 28px 24px;
+        gap: 16px;
         color: $cartick-text;
 
         &__icon {
-            width: 64px;
-            height: 64px;
+            width: 80px;
+            height: 80px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            border-radius: 20px;
             background: $cartick-light2;
             color: $cartick-primary;
-            margin-bottom: 1rem;
 
-            svg { width: 28px; height: 28px; }
+            svg {
+                width: 40px;
+                height: 40px;
+            }
         }
 
         &__text {
@@ -325,26 +432,28 @@
             font-size: 0.9375rem;
             font-weight: 600;
             color: $cartick-heading;
-            margin: 0 0 1rem;
+            margin: 0;
         }
 
         &__cta {
             display: inline-flex;
             align-items: center;
-            height: 38px;
-            padding: 0 1rem;
-            border-radius: 8px;
+            height: 40px;
+            padding: 0 16px;
+            border-radius: $cartick-r-3;
             background: $cartick-primary;
             color: #fff;
             font-family: $poppins;
             font-size: 0.8125rem;
             font-weight: 600;
             text-decoration: none;
-            transition: background-color 120ms;
+            box-shadow: 0 4px 14px rgba(107, 102, 247, 0.30);
+            transition: background-color 160ms, transform 160ms;
 
             &:hover {
-                background: darken($cartick-primary, 6%);
+                background: $cartick-primary-700;
                 color: #fff;
+                transform: translateY(-1px);
             }
         }
     }

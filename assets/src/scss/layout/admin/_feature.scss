@@ -1,37 +1,151 @@
 /*
 // -------------------------------------------- //
-//   Feature page module-row strip
-//   Literal translation of compact-fields.html
+//             Feature detail layout            //
+//   Outer wrap · module-row card · sections card
 // -------------------------------------------- //
 */
 .cartick-wrap {
 
+    /* Outer wrap that pads the feature content from the page-head. */
+    .cartick-feature {
+        padding: 20px 24px 24px;
+    }
+
+    /* Two-column: settings (flex 1) + preview (320px sticky). */
+    .cartick-feature__cols {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 340px;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .cartick-feature__settings {
+        min-width: 0;
+    }
+
+    .cartick-feature__preview {
+        position: sticky;
+        top: 52px;                 /* WP admin bar (32) + 20 breathing room */
+        max-height: calc(100vh - 52px - 20px);
+        overflow-y: auto;
+        background: $cartick-light;
+        border: 1px solid $cartick-border;
+        border-radius: $cartick-r-3;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    @media screen and (max-width: 782px) {
+        .cartick-feature__preview {
+            top: 66px;             /* mobile admin bar (46) + 20 */
+            max-height: calc(100vh - 66px - 20px);
+        }
+    }
+
+    .cartick-feature__preview-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .cartick-feature__preview-eyebrow {
+        font-family: $poppins;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $cartick-text;
+    }
+
+    .cartick-feature__preview-stage {
+        background: #fff;
+        border: 1px solid $cartick-border;
+        border-radius: $cartick-r-2;
+        padding: 16px;
+        overflow: hidden;
+    }
+
+    .cartick-feature__preview-note {
+        font-family: $nunito;
+        font-size: 11px;
+        line-height: 1.5;
+        color: $cartick-text;
+        margin: 0;
+    }
+
+    /* Below 1280px the preview pane is too cramped — collapse to one column. */
+    @media (max-width: 1280px) {
+        .cartick-feature__cols {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .cartick-feature__preview {
+            position: static;
+        }
+    }
+
+    /* ─── Module enable row (card-style) ─── */
     .cartick-module-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 16px;
-        padding: 14px 28px;
-        background: $cartick-light;
-        border-bottom: 1px solid $cartick-border;
+        padding: 20px 24px;
+        margin-bottom: 20px;
+        background: linear-gradient(180deg, #fff, $cartick-light);
+        border: 1px solid $cartick-border;
+        border-radius: $cartick-r-3;
+    }
+
+    .cartick-module-row__left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+    }
+
+    .cartick-module-row__icon {
+        width: 40px;
+        height: 40px;
+        border-radius: $cartick-r-3;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        transition: background 160ms, color 160ms;
+
+        &.is-on {
+            background: $cartick-light2;
+            color: $cartick-primary;
+        }
+
+        &.is-off {
+            background: $cartick-neutral-100;
+            color: $cartick-neutral-400;
+        }
     }
 
     .cartick-module-row__desc {
         color: $cartick-text;
         font-size: 13px;
+        font-weight: 400;
+        line-height: 1.5;
         min-width: 0;
+        margin: 0;
     }
 
-    .cartick-module-row__toggle {
+    .cartick-module-row__right {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         flex-shrink: 0;
     }
 
     .cartick-module-row__state {
         font-family: $poppins;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 600;
         letter-spacing: 0.05em;
         color: $cartick-text;
@@ -39,5 +153,13 @@
         &.is-on {
             color: $cartick-success;
         }
+    }
+
+    /* ─── Sections card — wraps all <Section>s in one bordered box ─── */
+    .cartick-sections-card {
+        background: #fff;
+        border: 1px solid $cartick-border;
+        border-radius: $cartick-r-3;
+        overflow: hidden;
     }
 }

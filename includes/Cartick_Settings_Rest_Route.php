@@ -131,20 +131,38 @@ class Cartick_Settings_Rest_Route {
 	}
 
 	/**
-	 * Save Route Settings
+	 * Save Route Settings.
+	 *
+	 * Merges the request body into the existing `cartick_options` blob —
+	 * only fields actually present in the request are overwritten. The
+	 * previous implementation initialised an empty $options and iterated
+	 * every key in options_data(), which clobbered untouched fields to ""
+	 * (sanitize_text_field(null)) on every save. That broke the Migrator's
+	 * per-module sync: replace_module_settings() then persisted "" values,
+	 * and the frontend's get_setting() falls back to schema defaults only
+	 * when the stored value is null — not when it's "" — so user-invisible
+	 * defaults were silently lost.
 	 */
 	public function save_settings( $res ) {
 
 		$data_arr = $this->options_data();
 
-		$options = array();
+		$options = (array) get_option( 'cartick_options', array() );
+
 		foreach ( $data_arr as $key => $value_arr ) {
-			foreach ( $value_arr as $value ) {
-				$options[ $key ][ $value ] = sanitize_text_field( $res[ $value ]) ;
+			if ( ! isset( $options[ $key ] ) || ! is_array( $options[ $key ] ) ) {
+				$options[ $key ] = array();
+			}
+			foreach ( $value_arr as $field ) {
+				$value = $res->get_param( $field );
+				if ( null === $value ) {
+					continue;
+				}
+				$options[ $key ][ $field ] = sanitize_text_field( $value );
 			}
 		}
 
-		update_option('cartick_options', $options);
+		update_option( 'cartick_options', $options );
 
 		// The admin still writes the legacy blob, but the frontend reads
 		// per-module rows + the modules-enabled registry. Sync them on every
@@ -152,7 +170,7 @@ class Cartick_Settings_Rest_Route {
 		( new \WpAxiom\Cartick\Core\Migrator( 'cartick', cartick()->settings_manager() ) )
 			->sync_blob_to_per_module();
 
-		return rest_ensure_response('successfully updated');
+		return rest_ensure_response( 'successfully updated' );
 	}
 
 	/**

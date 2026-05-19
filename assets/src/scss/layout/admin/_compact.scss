@@ -1,10 +1,6 @@
 /*
 // -------------------------------------------- //
-//   Sections, field rows, compact controls
-//   Translated 1:1 from docs/mockups/compact-fields.html.
-//   Only additions on top of the mockup are:
-//     - .cartick-cpicker__reset (color reset button)
-//     - .cartick-sp-*           (spacing control ported from axiom-blocks)
+//   Sections · field rows · compact controls   //
 // -------------------------------------------- //
 */
 
@@ -12,7 +8,7 @@
 
     /* ─── Section ─── */
     .cartick-section {
-        padding: 20px 28px;
+        padding: 20px 24px;
     }
 
     .cartick-section + .cartick-section {
@@ -21,28 +17,24 @@
 
     .cartick-section__heading {
         font-family: $poppins;
-        font-size: 13px;
+        font-size: 11px;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.08em;
         color: $cartick-text;
-        margin: 0 0 14px;
+        margin: 0 0 10px;
         width: auto;
-        display: block;
-    }
-
-    .cartick-section__body {
         display: block;
     }
 
     /* ─── Field row ─── */
     .cartick-field-row {
         display: grid;
-        grid-template-columns: 200px 1fr;
+        grid-template-columns: 220px 1fr;
         align-items: center;
-        gap: 16px;
-        padding: 8px 0;
-        min-height: 36px;
+        gap: 24px;
+        padding: 14px 0;
+        min-height: 40px;
     }
 
     .cartick-field-row + .cartick-field-row {
@@ -54,57 +46,68 @@
     }
 
     .cartick-field-row__label {
+        font-family: $nunito;
         font-size: 13px;
-        font-weight: 500;
+        font-weight: 600;
         color: $cartick-heading;
         line-height: 1.3;
     }
 
     .cartick-field-row__help {
-        font-size: 11px;
+        font-family: $nunito;
+        font-size: 12px;
         font-weight: 400;
         color: $cartick-text;
-        margin-top: 2px;
-        line-height: 1.4;
+        margin-top: 3px;
+        line-height: 1.45;
     }
 
     .cartick-field-row__control {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         gap: 8px;
         min-width: 0;
     }
-
-    /* ─── Toggle ─── */
-    /* (cartick-toggle is defined in _card.scss; mockup sizes match) */
 
     /* ─── Text input ─── */
     .cartick-cinput {
         height: 32px;
         padding: 0 10px;
         border: 1px solid $cartick-border;
-        border-radius: 4px;
+        border-radius: $cartick-r-1;
         background: $cartick-light;
         font-family: $nunito;
         font-size: 13px;
+        font-weight: 500;
         color: $cartick-heading;
         width: 100%;
-        max-width: 280px;
+        max-width: 320px;
         outline: none;
+        transition: border-color 120ms, box-shadow 120ms, background 120ms;
+
+        &::placeholder {
+            color: $cartick-text;
+        }
+
+        &:hover {
+            border-color: $cartick-neutral-300;
+            background: #fff;
+        }
 
         &:focus {
             border-color: $cartick-primary;
-            box-shadow: 0 0 0 2px rgba($cartick-primary, 0.15);
+            background: #fff;
+            box-shadow: $cartick-focus;
         }
     }
 
     /* ─── Segmented ─── */
     .cartick-segmented {
         display: inline-flex;
-        border: 1px solid $cartick-border;
-        border-radius: 4px;
-        background: $cartick-light;
-        padding: 2px;
+        padding: 3px;
+        background: $cartick-neutral-100;
+        border-radius: $cartick-r-1;
         gap: 2px;
 
         button {
@@ -112,7 +115,7 @@
             padding: 0 12px;
             border: 0;
             background: transparent;
-            font-family: $nunito;
+            font-family: $poppins;
             font-size: 12px;
             font-weight: 500;
             color: $cartick-text;
@@ -120,11 +123,20 @@
             border-radius: 3px;
             box-shadow: none;
             outline: none;
+            transition: background 120ms, color 120ms, box-shadow 120ms;
+
+            &:hover {
+                color: $cartick-heading;
+            }
 
             &.is-active {
                 background: #fff;
                 color: $cartick-heading;
-                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+                box-shadow: 0 1px 2px rgba(20, 23, 27, 0.08), 0 0 0 1px rgba(20, 23, 27, 0.04);
+            }
+
+            &:focus-visible {
+                box-shadow: $cartick-focus;
             }
         }
     }
@@ -138,25 +150,33 @@
             height: 32px;
             padding: 0 28px 0 10px;
             border: 1px solid $cartick-border;
-            border-radius: 4px;
+            border-radius: $cartick-r-1;
             background: $cartick-light;
             font-family: $nunito;
             font-size: 13px;
+            font-weight: 500;
             color: $cartick-heading;
             outline: none;
             cursor: pointer;
             appearance: none;
-            min-width: 140px;
+            min-width: 160px;
+            transition: border-color 120ms, box-shadow 120ms, background 120ms;
+
+            &:hover {
+                border-color: $cartick-neutral-300;
+                background: #fff;
+            }
 
             &:focus {
                 border-color: $cartick-primary;
-                box-shadow: 0 0 0 2px rgba($cartick-primary, 0.15);
+                background: #fff;
+                box-shadow: $cartick-focus;
             }
         }
 
         &__chev {
             position: absolute;
-            right: 8px;
+            right: 10px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 10px;
@@ -165,17 +185,20 @@
         }
     }
 
-    /* ─── Number stepper (mockup-exact) ─── */
+    /* ─── Number stepper ─── */
     .cartick-stepper-wrap {
         display: inline-flex;
         align-items: center;
         gap: 8px;
     }
+
     .cartick-stepper {
         display: inline-flex;
+        align-items: center;
         border: 1px solid $cartick-border;
-        border-radius: 4px;
+        border-radius: $cartick-r-1;
         background: $cartick-light;
+        height: 32px;
         overflow: hidden;
 
         button {
@@ -188,9 +211,11 @@
             cursor: pointer;
             box-shadow: none;
             outline: none;
+            transition: background 120ms, color 120ms;
 
             &:hover {
-                background: $cartick-light2;
+                background: $cartick-neutral-100;
+                color: $cartick-heading;
             }
         }
 
@@ -201,8 +226,9 @@
             border-left: 1px solid $cartick-border;
             border-right: 1px solid $cartick-border;
             text-align: center;
-            font-family: $nunito;
-            font-size: 13px;
+            font-family: $mono;
+            font-size: 12px;
+            font-weight: 500;
             color: $cartick-heading;
             background: #fff;
             outline: none;
@@ -215,28 +241,40 @@
                 -webkit-appearance: none;
                 margin: 0;
             }
+
+            &:focus {
+                background: $cartick-light;
+            }
         }
     }
+
     .cartick-stepper__suffix {
-        font-size: 12px;
+        font-family: $mono;
+        font-size: 11px;
         color: $cartick-text;
     }
 
-    /* ─── Color picker (mockup + reset button addition) ─── */
+    /* ─── Color picker ─── */
     .cartick-cpicker {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
+        height: 32px;
+        padding: 0 8px 0 4px;
+        border: 1px solid $cartick-border;
+        border-radius: $cartick-r-1;
+        background: $cartick-light;
 
         &__swatch {
             position: relative;
             display: inline-block;
-            width: 28px;
-            height: 28px;
-            border: 1px solid $cartick-border;
+            width: 22px;
+            height: 22px;
             border-radius: 4px;
+            box-shadow: inset 0 0 0 1px rgba(20, 23, 27, 0.08);
             cursor: pointer;
             overflow: hidden;
+            flex: 0 0 auto;
 
             input {
                 position: absolute;
@@ -251,50 +289,45 @@
         }
 
         &__hex {
-            height: 30px;
-            padding: 0 10px;
-            border: 1px solid $cartick-border;
-            border-radius: 4px;
-            background: $cartick-light;
-            font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+            height: 24px;
+            padding: 0 6px;
+            border: 0;
+            background: transparent;
+            font-family: $mono;
             font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
             color: $cartick-heading;
-            width: 100px;
-            text-align: center;
+            width: 84px;
+            text-align: left;
             outline: none;
             box-shadow: none;
-
-            &:focus {
-                border-color: $cartick-primary;
-            }
+            text-transform: uppercase;
         }
 
-        /* Reset button — NEW vs mockup. Appears when value differs from default. */
         &__reset {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             padding: 0;
             background: transparent;
-            border: 1px solid $cartick-border;
+            border: 0;
             border-radius: 4px;
             color: $cartick-text;
             cursor: pointer;
             box-shadow: none;
             outline: none;
-            transition: color 120ms, border-color 120ms, background 120ms;
+            transition: color 120ms, background 120ms;
 
             &:hover {
-                color: $cartick-primary;
-                border-color: rgba($cartick-primary, 0.3);
-                background: rgba($cartick-primary, 0.06);
+                color: $cartick-heading;
+                background: $cartick-neutral-100;
             }
 
-            &:focus {
-                outline: none;
-                box-shadow: 0 0 0 2px rgba($cartick-primary, 0.15);
+            &:focus-visible {
+                box-shadow: $cartick-focus;
             }
         }
     }
@@ -302,14 +335,14 @@
     /* ─── Spacing control ─── */
     .cartick-sp-control {
         width: 100%;
-        max-width: 420px;
+        max-width: 440px;
     }
 
     .cartick-sp-label-row {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        margin-bottom: $cartick-gap-10;
+        margin-bottom: 10px;
     }
 
     .cartick-sp-actions {
@@ -319,13 +352,13 @@
     }
 
     .cartick-sp-reset {
-        font-family: $nunito;
-        font-size: 12px;
-        font-weight: 500;
+        font-family: $poppins;
+        font-size: 11px;
+        font-weight: 600;
         color: $cartick-text;
         background: transparent;
         border: 1px solid $cartick-border;
-        border-radius: 4px;
+        border-radius: $cartick-r-1;
         height: 24px;
         padding: 0 10px;
         cursor: pointer;
@@ -335,13 +368,13 @@
         outline: none;
 
         &:hover {
-            color: $cartick-primary;
-            border-color: rgba($cartick-primary, 0.3);
-            background: rgba($cartick-primary, 0.06);
+            color: $cartick-primary-700;
+            border-color: $cartick-neutral-300;
+            background: $cartick-neutral-100;
         }
 
-        &:focus {
-            box-shadow: 0 0 0 2px rgba($cartick-primary, 0.15);
+        &:focus-visible {
+            box-shadow: $cartick-focus;
         }
 
         &:disabled,
@@ -357,7 +390,7 @@
         height: 24px;
         background: transparent;
         border: 1px solid $cartick-border;
-        border-radius: 4px;
+        border-radius: $cartick-r-1;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -369,29 +402,29 @@
         transition: background 120ms, border-color 120ms, color 120ms;
 
         &:hover {
-            color: $cartick-primary;
-            border-color: rgba($cartick-primary, 0.3);
-            background: rgba($cartick-primary, 0.06);
+            color: $cartick-primary-700;
+            border-color: $cartick-neutral-300;
+            background: $cartick-neutral-100;
         }
 
-        &:focus {
-            box-shadow: 0 0 0 2px rgba($cartick-primary, 0.15);
+        &:focus-visible {
+            box-shadow: $cartick-focus;
         }
 
         &.is-linked {
-            background: $cartick-primary;
-            border-color: $cartick-primary;
-            color: $white;
+            background: $cartick-light2;
+            border-color: $cartick-light2;
+            color: $cartick-primary-700;
         }
     }
 
     .cartick-sp-input-row {
         display: flex;
         align-items: center;
-        gap: $cartick-gap-10;
+        gap: 10px;
 
         &--head {
-            margin-bottom: $cartick-gap-10;
+            margin-bottom: 10px;
         }
     }
 
@@ -402,39 +435,41 @@
 
     .cartick-sp-px-wrap {
         position: relative;
-        width: 92px;
+        width: 96px;
         flex-shrink: 0;
 
         &.is-applied .cartick-sp-px-input {
             border-color: $cartick-primary;
-            background: rgba($cartick-primary, 0.06);
-            color: $cartick-primary;
+            background: $cartick-light2;
+            color: $cartick-primary-700;
             font-weight: 600;
         }
 
         &.is-applied .cartick-sp-unit {
-            color: $cartick-primary;
+            color: $cartick-primary-700;
         }
     }
 
     .cartick-sp-px-input {
         background: $cartick-light;
         border: 1px solid $cartick-border;
-        border-radius: 4px;
+        border-radius: $cartick-r-1;
         box-shadow: none;
         color: $cartick-heading;
-        font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
-        font-size: 13px;
-        min-height: 30px;
+        font-family: $mono;
+        font-size: 12px;
+        font-weight: 500;
+        height: 30px;
         outline: none;
         padding: 0 32px 0 12px;
         text-align: left;
         width: 100%;
         -moz-appearance: textfield;
+        transition: border-color 120ms, box-shadow 120ms, background 120ms;
 
         &:focus {
             border-color: $cartick-primary;
-            box-shadow: 0 0 0 2px rgba($cartick-primary, 0.15);
+            box-shadow: $cartick-focus;
         }
 
         &::-webkit-inner-spin-button,
@@ -449,7 +484,7 @@
         right: 8px;
         top: 50%;
         transform: translateY(-50%);
-        font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+        font-family: $mono;
         font-size: 10px;
         font-weight: 600;
         color: $cartick-text;
@@ -467,7 +502,7 @@
         background: linear-gradient(
             to right,
             $cartick-primary var(--sp-pct, 0%),
-            $cartick-border var(--sp-pct, 0%)
+            $cartick-neutral-200 var(--sp-pct, 0%)
         );
         outline: none;
         cursor: pointer;
@@ -481,7 +516,7 @@
             border-radius: 50%;
             background: $cartick-primary;
             border: 2px solid $white;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.22);
+            box-shadow: 0 1px 4px rgba(20, 23, 27, 0.22);
             cursor: pointer;
         }
 
@@ -504,8 +539,8 @@
 
     .cartick-sp-sides-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: $cartick-gap-15 $cartick-gap-20;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px 20px;
     }
 
     .cartick-sp-side {
@@ -519,8 +554,8 @@
     }
 
     .cartick-sp-side-label {
-        font-family: $poppins;
-        font-size: 10px;
+        font-family: $mono;
+        font-size: 9px;
         font-weight: 600;
         letter-spacing: 0.08em;
         text-transform: uppercase;

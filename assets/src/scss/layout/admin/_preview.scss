@@ -1,0 +1,398 @@
+/*
+// -------------------------------------------- //
+//        Live preview mocks (per module)       //
+//        Renders inside .cartick-feature__preview-stage
+// -------------------------------------------- //
+*/
+.cartick-wrap {
+
+    /* Stripe-pattern placeholder image used inside every preview. */
+    .cartick-preview-ph {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        overflow: hidden;
+        background: repeating-linear-gradient(135deg, $cartick-neutral-200 0 6px, $cartick-neutral-100 6px 12px);
+        border: 1px solid $cartick-border;
+
+        span {
+            font-family: $mono;
+            font-size: 9px;
+            color: $cartick-text;
+            text-align: center;
+            padding: 4px;
+        }
+    }
+
+    /* Generic "device" frame used to host a sticky bar / menu / drawer mock. */
+    .cartick-preview-frame {
+        position: relative;
+        width: 100%;
+        border-radius: $cartick-r-2;
+        border: 1px solid $cartick-border;
+        overflow: hidden;
+
+        &--page {
+            height: 200px;
+            background: repeating-linear-gradient(180deg, $cartick-light 0 12px, #fff 12px 24px);
+        }
+
+        &--menu {
+            background: $cartick-light;
+            padding: 14px;
+        }
+
+        &--drawer {
+            height: 320px;
+            background: rgba(20, 23, 27, 0.32);
+        }
+    }
+
+    /* ─── Add-to-Cart preview · product card ─── */
+    .cartick-preview-card {
+        max-width: 240px;
+        margin: 0 auto;
+        background: #fff;
+        border: 1px solid $cartick-border;
+        border-radius: $cartick-r-3;
+        overflow: hidden;
+        font-family: $nunito;
+
+        &__body {
+            padding: 12px;
+        }
+
+        &__name {
+            font-family: $poppins;
+            font-weight: 600;
+            font-size: 12px;
+            color: $cartick-heading;
+        }
+
+        &__price {
+            font-size: 11px;
+            color: $cartick-text;
+            margin-top: 2px;
+        }
+
+        &__btn {
+            margin-top: 10px;
+            width: 100%;
+            border-radius: $cartick-r-2;
+            border: 0;
+            cursor: default;
+            font-family: $poppins;
+            font-weight: 600;
+            font-size: 12px;
+            transition: opacity 120ms;
+        }
+    }
+
+    /* ─── Sticky-Cart preview · bar pinned to top or bottom of frame ─── */
+    .cartick-preview-sticky {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 56px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 14px;
+        font-family: $nunito;
+
+        &.is-bottom {
+            bottom: 0;
+            border-top: 1px solid $cartick-border;
+        }
+
+        &.is-top {
+            top: 0;
+            border-bottom: 1px solid $cartick-border;
+        }
+
+        &__body {
+            min-width: 0;
+            flex: 1;
+        }
+
+        &__name {
+            font-size: 11px;
+            font-weight: 600;
+            color: $cartick-heading;
+        }
+
+        &__meta {
+            font-size: 10px;
+            color: $cartick-text;
+        }
+
+        &__price {
+            font-family: $poppins;
+            font-weight: 600;
+            font-size: 13px;
+            color: $cartick-heading;
+        }
+
+        &__btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: $cartick-primary;
+            color: #fff;
+            border: 0;
+            border-radius: $cartick-r-2;
+            padding: 6px 10px;
+            font-family: $poppins;
+            font-weight: 600;
+            font-size: 11px;
+            cursor: default;
+
+            span {
+                font-size: 12px;
+                line-height: 1;
+            }
+        }
+    }
+
+    /* ─── Menu-Cart preview · header strip ─── */
+    .cartick-preview-menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid $cartick-border;
+
+        &__brand {
+            font-family: $poppins;
+            font-weight: 600;
+            color: $cartick-heading;
+        }
+
+        &__nav {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 11px;
+            font-weight: 600;
+            color: $cartick-heading;
+            flex: 1;
+
+            > span {
+                font-family: $nunito;
+            }
+        }
+
+        &__cart {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: $cartick-r-pill;
+            background: $cartick-light2;
+            color: $cartick-primary-700;
+        }
+
+        &__count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 16px;
+            height: 16px;
+            padding: 0 4px;
+            font-size: 9px;
+            font-weight: 700;
+            border-radius: $cartick-r-pill;
+            background: $cartick-primary;
+            color: #fff;
+        }
+
+        &__price {
+            font-family: $poppins;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        &__hero {
+            padding: 14px 0 0;
+        }
+
+        &__h {
+            font-family: $poppins;
+            font-weight: 600;
+            font-size: 16px;
+            color: $cartick-heading;
+        }
+
+        &__sub {
+            font-size: 11px;
+            color: $cartick-text;
+            margin-top: 2px;
+        }
+    }
+
+    /* ─── Off-Canvas preview · drawer slid in from left or right ─── */
+    .cartick-preview-drawer {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 72%;
+        background: #fff;
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+        padding: 12px;
+        font-family: $nunito;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        &--right { right: 0; }
+        &--left  { left: 0; }
+
+        &__head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        &__title {
+            font-family: $poppins;
+            font-weight: 600;
+            font-size: 12px;
+            color: $cartick-heading;
+            flex: 1;
+            min-width: 0;
+        }
+
+        &__count {
+            font-size: 9px;
+            font-weight: 600;
+            color: $cartick-primary-700;
+            background: $cartick-light2;
+            padding: 2px 6px;
+            border-radius: $cartick-r-pill;
+        }
+
+        &__close {
+            color: $cartick-text;
+            font-size: 14px;
+            line-height: 1;
+            cursor: default;
+        }
+
+        &__bar {
+            height: 4px;
+            border-radius: $cartick-r-pill;
+            background: $cartick-neutral-100;
+            overflow: hidden;
+        }
+
+        &__bar-fill {
+            width: 60%;
+            height: 100%;
+            background: $cartick-primary;
+        }
+
+        &__bar-text {
+            font-size: 9px;
+            color: $cartick-text;
+        }
+
+        &__items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+
+            li {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 6px 0;
+                border-bottom: 1px dashed $cartick-border;
+
+                &:last-child { border-bottom: 0; }
+            }
+        }
+
+        &__item-body {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__item-name {
+            font-size: 10px;
+            font-weight: 600;
+            color: $cartick-heading;
+        }
+
+        &__item-meta {
+            font-size: 9px;
+            color: $cartick-text;
+        }
+
+        &__item-price {
+            font-family: $poppins;
+            font-weight: 600;
+            font-size: 10px;
+            color: $cartick-heading;
+        }
+
+        &__foot {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        &__subtotal {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 11px;
+            color: $cartick-text;
+        }
+
+        &__total {
+            font-family: $poppins;
+            font-weight: 700;
+            font-size: 13px;
+            color: $cartick-heading;
+        }
+
+        &__cta {
+            width: 100%;
+            padding: 8px 0;
+            border: 0;
+            border-radius: $cartick-r-2;
+            background: $cartick-primary;
+            color: #fff;
+            font-family: $poppins;
+            font-weight: 600;
+            font-size: 11px;
+            cursor: default;
+        }
+
+        &__trigger {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(20, 23, 27, 0.24);
+            pointer-events: none;
+
+            &--top-left     { top: 10px;    left: 10px; }
+            &--top-right    { top: 10px;    right: 10px; }
+            &--bottom-left  { bottom: 10px; left: 10px; }
+            &--bottom-right { bottom: 10px; right: 10px; }
+        }
+    }
+}

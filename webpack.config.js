@@ -18,7 +18,7 @@ const reactConfig = {
 const assetsConfig = {
     ...defaultConfig,
     entry: {
-        'admin': ['./assets/src/js/admin.js', './assets/src/scss/admin.scss'],
+        'admin': ['./assets/src/scss/admin.scss'],
         'cartick': ['./assets/src/js/cartick.js', './assets/src/scss/cartick.scss']
     },
     output: {

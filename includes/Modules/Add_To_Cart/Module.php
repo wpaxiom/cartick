@@ -28,6 +28,9 @@ class Module extends Core_Module {
 
 	public function settings_schema(): array {
 		return array(
+			// Module-level enable flag. Mirrored to cartick_modules by the
+			// Migrator so Module_Registry::boot() actually gates this module.
+			'status'               => array( 'type' => 'bool',   'default' => true ),
 			'simple_text'          => array( 'type' => 'string', 'default' => 'Add to cart' ),
 			'variable_text'        => array( 'type' => 'string', 'default' => 'Select Options' ),
 			'grouped_text'         => array( 'type' => 'string', 'default' => 'Select Options' ),
@@ -83,7 +86,11 @@ class Module extends Core_Module {
 	}
 
 	public function body_class( $classes ): array {
-		if ( class_exists( 'WooCommerce' ) && ( is_shop() || is_product() ) && $this->get_setting( 'enable_custom_style' ) ) {
+		// Add the class globally when custom styling is on. The selectors in
+		// render_styles() only match WooCommerce add-to-cart buttons, so this
+		// has zero effect on non-WC pages but DOES catch product grids on the
+		// homepage, category pages, blocks-based widgets, etc.
+		if ( class_exists( 'WooCommerce' ) && $this->get_setting( 'enable_custom_style' ) ) {
 			$classes[] = 'cartick-cart-btn';
 		}
 		return $classes;
@@ -103,15 +110,56 @@ class Module extends Core_Module {
 		$left   = (int) $this->get_setting( 'padding_left' );
 		$color  = (string) $this->get_setting( 'color' );
 		$bg     = (string) $this->get_setting( 'background' );
+
+		/*
+		 * The base selector targets the two WooCommerce button classes
+		 * directly (.add_to_cart_button on loops, .single_add_to_cart_button
+		 * on single product pages). Each property uses !important so we win
+		 * against typical theme rules without having to chase every theme's
+		 * specificity stack. Themes that need to override can still raise
+		 * specificity or use their own !important.
+		 */
 		?>
 		<style class="cartick-cart-btn-styles">
-			.cartick-cart-btn .button {
-				padding-top: <?php echo esc_attr( $top ); ?>px;
-				padding-right: <?php echo esc_attr( $right ); ?>px;
-				padding-bottom: <?php echo esc_attr( $bottom ); ?>px;
-				padding-left: <?php echo esc_attr( $left ); ?>px;
-				color: <?php echo esc_attr( $color ); ?>;
-				background-color: <?php echo esc_attr( $bg ); ?>;
+			body.cartick-cart-btn .add_to_cart_button,
+			body.cartick-cart-btn .single_add_to_cart_button,
+			body.cartick-cart-btn a.button.add_to_cart_button,
+			body.cartick-cart-btn button.single_add_to_cart_button,
+			body.cartick-cart-btn .woocommerce a.button.add_to_cart_button,
+			body.cartick-cart-btn .woocommerce button.single_add_to_cart_button,
+			body.cartick-cart-btn .wc-block-components-product-button .wp-block-button__link {
+				padding-top: <?php echo esc_attr( $top ); ?>px !important;
+				padding-right: <?php echo esc_attr( $right ); ?>px !important;
+				padding-bottom: <?php echo esc_attr( $bottom ); ?>px !important;
+				padding-left: <?php echo esc_attr( $left ); ?>px !important;
+				color: <?php echo esc_attr( $color ); ?> !important;
+				background-color: <?php echo esc_attr( $bg ); ?> !important;
+				border-color: <?php echo esc_attr( $bg ); ?> !important;
+				transition: filter 160ms ease, transform 160ms ease, box-shadow 160ms ease !important;
+				cursor: pointer;
+			}
+			body.cartick-cart-btn .add_to_cart_button:hover,
+			body.cartick-cart-btn .single_add_to_cart_button:hover,
+			body.cartick-cart-btn a.button.add_to_cart_button:hover,
+			body.cartick-cart-btn button.single_add_to_cart_button:hover,
+			body.cartick-cart-btn .woocommerce a.button.add_to_cart_button:hover,
+			body.cartick-cart-btn .woocommerce button.single_add_to_cart_button:hover,
+			body.cartick-cart-btn .wc-block-components-product-button .wp-block-button__link:hover {
+				color: <?php echo esc_attr( $color ); ?> !important;
+				background-color: <?php echo esc_attr( $bg ); ?> !important;
+				border-color: <?php echo esc_attr( $bg ); ?> !important;
+				filter: brightness(0.92);
+				transform: translateY(-1px);
+			}
+			body.cartick-cart-btn .add_to_cart_button:active,
+			body.cartick-cart-btn .single_add_to_cart_button:active,
+			body.cartick-cart-btn a.button.add_to_cart_button:active,
+			body.cartick-cart-btn button.single_add_to_cart_button:active,
+			body.cartick-cart-btn .woocommerce a.button.add_to_cart_button:active,
+			body.cartick-cart-btn .woocommerce button.single_add_to_cart_button:active,
+			body.cartick-cart-btn .wc-block-components-product-button .wp-block-button__link:active {
+				filter: brightness(0.85);
+				transform: translateY(0);
 			}
 		</style>
 		<?php

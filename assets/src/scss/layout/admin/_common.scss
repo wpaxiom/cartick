@@ -20,15 +20,25 @@
         display: block;
     }
 
-    /* Unified card — matches compact-fields.html .wrap exactly. */
+    /* Shell — sidebar + main column. Intentionally NOT overflow:hidden;
+       a clipped ancestor would break `position: sticky` on the sidebar
+       and the live preview pane. Visual rounding is owned by the
+       sidebar's left edge instead. */
     .cartick-shell {
-        max-width: 760px;
+        display: flex;
+        align-items: stretch;
         width: 100%;
-        margin: 0 auto;
+        min-height: 720px;
         background: #fff;
         border: 1px solid $cartick-border;
-        border-radius: 6px;
-        overflow: hidden;
+        border-radius: $cartick-r-2;
+    }
+
+    .cartick-shell__main {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
     }
     &__loader {
         position: absolute;

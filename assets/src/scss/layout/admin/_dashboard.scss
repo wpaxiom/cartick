@@ -1,16 +1,55 @@
 /*
 // -------------------------------------------- //
-//  Dashboard inner rows
-//  Literal translation of dashboard-cards.html
+//             Dashboard — stats + grid         //
 // -------------------------------------------- //
 */
 .cartick-wrap {
 
-    .cartick-dashboard__summary {
-        padding: 14px 28px;
+    /* First-run welcome card — shown only when no modules are enabled
+       (and settings have finished loading). Sits above the stats bar. */
+    .cartick-welcome {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin: 20px 24px 0;
+        padding: 18px 22px;
+        background: linear-gradient(135deg, rgba(107, 102, 247, 0.08), rgba(179, 102, 246, 0.06));
+        border: 1px solid rgba(107, 102, 247, 0.18);
+        border-radius: $cartick-r-3;
+    }
+
+    .cartick-welcome__icon {
+        width: 40px;
+        height: 40px;
+        border-radius: $cartick-r-3;
+        background: $cartick-light2;
+        color: $cartick-primary;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+    }
+
+    .cartick-welcome__body {
+        min-width: 0;
+    }
+
+    .cartick-welcome__title {
+        font-family: $poppins;
+        font-size: 15px;
+        font-weight: 600;
+        color: $cartick-heading;
+        margin: 0 0 4px;
+        line-height: 1.3;
+    }
+
+    .cartick-welcome__sub {
+        font-family: $nunito;
         font-size: 13px;
-        color: $cartick-text;
-        border-bottom: 1px solid $cartick-border;
+        font-weight: 400;
+        color: $cartick-neutral-400;
+        line-height: 1.5;
+        margin: 0;
 
         strong {
             color: $cartick-heading;
@@ -18,10 +57,104 @@
         }
     }
 
+    /* Stats bar — sits above the cards grid. Holds the
+       enabled-count metric and the plugin version chip. */
+    .cartick-stats-bar {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        padding: 14px 24px;
+        margin: 20px 24px 0;
+        background: $cartick-light;
+        border: 1px solid $cartick-border;
+        border-radius: $cartick-r-3;
+    }
+
+    .cartick-stats-bar__metric {
+        display: flex;
+        align-items: baseline;
+        gap: 8px;
+    }
+
+    .cartick-stats-bar__count {
+        font-family: $poppins;
+        font-size: 22px;
+        font-weight: 600;
+        color: $cartick-heading;
+        line-height: 1;
+    }
+
+    .cartick-stats-bar__count-total {
+        color: $cartick-text;
+        font-weight: 500;
+    }
+
+    .cartick-stats-bar__label {
+        font-family: $nunito;
+        font-size: 12px;
+        font-weight: 500;
+        color: $cartick-text;
+    }
+
+    .cartick-stats-bar__divider {
+        width: 1px;
+        height: 24px;
+        background: $cartick-border;
+        flex: 0 0 auto;
+    }
+
+    /* Cards grid */
     .cartick-dashboard__grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 14px;
-        padding: 20px;
+        padding: 20px 24px 24px;
+    }
+
+    @media (max-width: 900px) {
+        .cartick-dashboard__grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* ─── Skeleton placeholders (loading state) ─── */
+    .cartick-sk {
+        display: inline-block;
+        background: linear-gradient(
+            90deg,
+            $cartick-neutral-100 0%,
+            $cartick-neutral-200 50%,
+            $cartick-neutral-100 100%
+        );
+        background-size: 200% 100%;
+        animation: cartick-sk-pulse 1.4s ease-in-out infinite;
+        border-radius: $cartick-r-1;
+        vertical-align: middle;
+    }
+
+    .cartick-sk--icon   { width: 36px; height: 36px; border-radius: $cartick-r-3; }
+    .cartick-sk--toggle { width: 32px; height: 18px; border-radius: $cartick-r-pill; }
+    .cartick-sk--line   { height: 11px; width: 100%; display: block; margin-top: 6px; }
+    .cartick-sk--w-25   { width: 25%; }
+    .cartick-sk--w-30   { width: 30%; }
+    .cartick-sk--w-60   { width: 60%; }
+    .cartick-sk--w-70   { width: 70%; }
+    .cartick-sk--w-90   { width: 90%; }
+    .cartick-sk--metric { width: 140px; height: 22px; }
+    .cartick-sk--chip   { width: 110px; height: 22px; border-radius: $cartick-r-pill; }
+
+    /* Skeleton card overrides — kill hover lift, keep shape stable. */
+    .cartick-fcard--skeleton {
+        pointer-events: none;
+
+        &:hover {
+            border-color: $cartick-border;
+            box-shadow: none;
+        }
+    }
+
+    @keyframes cartick-sk-pulse {
+        0%   { background-position: 100% 50%; }
+        100% { background-position: -100% 50%; }
     }
 }

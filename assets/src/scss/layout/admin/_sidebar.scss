@@ -1,12 +1,180 @@
 /*
 // -------------------------------------------- //
-//                Admin Sidebar                 //
+//                 Admin Sidebar                //
 // -------------------------------------------- //
 */
 .cartick-wrap {
-    .cartick {
-        &-sidebar {
-            grid-area: s;
+
+    .cartick-sidebar {
+        width: 220px;
+        flex: 0 0 220px;
+        background: $cartick-light;
+        border-right: 1px solid $cartick-border;
+        /* Match the shell's rounded corners on the left edge so the
+           sidebar's tinted background respects the shell's silhouette. */
+        border-radius: $cartick-r-2 0 0 $cartick-r-2;
+        padding: 14px 10px;
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;     /* fill the shell's full height */
+    }
+
+    /* Sticky wrapper inside the sidebar — only the brand + nav follow
+       the viewport. The version footer stays anchored to the bottom of
+       the (full-height) sidebar so it doesn't feel jammed under the nav. */
+    .cartick-sidebar__sticky {
+        position: sticky;
+        top: 32px;               /* WP admin bar (>= 783px) */
+        max-height: calc(100vh - 32px - 20px);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @media screen and (max-width: 782px) {
+        .cartick-sidebar__sticky {
+            top: 46px;           /* WP admin bar (mobile) */
+            max-height: calc(100vh - 46px - 20px);
         }
+    }
+
+    .cartick-sidebar__brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px 14px;
+        margin-bottom: 6px;
+        border-bottom: 1px solid $cartick-border;
+    }
+
+    .cartick-sidebar__brand-name {
+        font-family: $poppins;
+        font-weight: 600;
+        font-size: 16px;
+        letter-spacing: -0.01em;
+        color: $cartick-heading;
+    }
+
+    .cartick-sidebar__nav {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-height: 0;
+    }
+
+    .cartick-sidebar__item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 7px 10px;
+        background: transparent;
+        border: 0;
+        border-radius: $cartick-r-2;
+        color: $cartick-heading;
+        font-family: $nunito;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: left;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: none;
+        outline: none;
+        transition: background 120ms, color 120ms;
+
+        svg {
+            flex: 0 0 auto;
+            opacity: 0.7;
+            transition: opacity 120ms;
+        }
+
+        &:hover {
+            background: $cartick-neutral-100;
+        }
+
+        &:focus-visible {
+            box-shadow: $cartick-focus;
+        }
+
+        &.is-active {
+            background: $cartick-light2;
+            color: $cartick-primary-700;
+            font-weight: 700;
+
+            svg {
+                opacity: 1;
+            }
+        }
+    }
+
+    .cartick-sidebar__label {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .cartick-sidebar__chev {
+        opacity: 0.5;
+        transition: transform 160ms;
+        flex: 0 0 auto;
+
+        &.is-collapsed {
+            transform: rotate(-90deg);
+        }
+    }
+
+    .cartick-sidebar__sub {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        padding: 2px 0 4px 14px;
+        margin-left: 4px;
+        border-left: 1px solid $cartick-border;
+    }
+
+    .cartick-sidebar__sub-item {
+        padding: 6px 8px;
+        background: transparent;
+        border: 0;
+        border-radius: $cartick-r-1;
+        font-family: $nunito;
+        font-size: 12px;
+        font-weight: 500;
+        color: $cartick-neutral-400;
+        text-align: left;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: none;
+        outline: none;
+        transition: background 120ms, color 120ms;
+
+        &:hover {
+            background: $cartick-neutral-100;
+            color: $cartick-heading;
+        }
+
+        &:focus-visible {
+            box-shadow: $cartick-focus;
+        }
+
+        &.is-active {
+            background: $cartick-light2;
+            color: $cartick-primary-700;
+            font-weight: 700;
+        }
+    }
+
+    .cartick-sidebar__foot {
+        margin-top: auto;        /* anchor to the bottom of the sidebar */
+        padding: 12px 10px 4px;
+        border-top: 1px solid $cartick-border;
+    }
+
+    .cartick-sidebar__version {
+        display: block;
+        padding: 0 4px;
+        font-family: $mono;
+        font-size: 10px;
+        color: $cartick-text;
     }
 }

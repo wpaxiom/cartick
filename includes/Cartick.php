@@ -101,6 +101,7 @@ final class Cartick {
 
 		$data = array(
 			'cart_btn'    => array(
+				'status'               => 1,
 				'simple_text'          => 'Add to cart',
 				'variable_text'        => 'Select Options',
 				'grouped_text'         => 'Select Options',

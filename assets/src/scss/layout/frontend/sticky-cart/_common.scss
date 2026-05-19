@@ -1,82 +1,281 @@
+/*
+// -------------------------------------------- //
+//        STICKY CART  ·  Bar on PDP            //
+// -------------------------------------------- //
+*/
+
 .cartick-sticky-cart {
-	&__wrap {
-		position: fixed;
-		left: 0;
-		right: 0;
-		background: #ffffff;
-		display: flex;
-		align-items: center;
-		z-index: 99;
-		box-shadow: 0 0 4px 0 rgba(103, 56, 56, 0.10);
-		padding: 10px;
-		gap: 10px;
-		
-		&.top {
-			top: 0;
-		}
 
-		&.bottom {
-			bottom: 0;
-		}
-	}
-	&__thumb {
-		img {
-			height: 48px;
-		}
+    /* ─── Bar ─── */
+    &__wrap {
+        position: fixed;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 20px;
+        background: #fff;
+        font-family: $nunito;
+        transition: transform 220ms cubic-bezier(.22, .61, .36, 1),
+                    opacity   220ms ease;
 
-		flex: auto;
-	}
-	&__product {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-	}
-	&__price {
-		flex: auto;
-	}
-	&__form {
-		.cart {
-			display: flex;
-			align-items: center;
-			gap: 10px;
+        &.top {
+            top: 0;
+            border-bottom: 1px solid $cartick-border;
+            box-shadow: 0 1px 0 rgba(20, 23, 27, 0.04);
+        }
 
-			.woocommerce-variation {
-				display: none !important;
-			}
+        &.bottom {
+            bottom: 0;
+            border-top: 1px solid $cartick-border;
+            box-shadow: 0 -1px 0 rgba(20, 23, 27, 0.04);
+        }
+    }
 
-			.woocommerce-grouped-product-list {
-				td {
-					padding: 0 15px 15px 0;
-				}
-			}
-			table.variations tbody {
-				display: flex;
-				gap: 20px;
-				align-items: center;
-			}
-			button.button {
-				margin: 0;
-			}
-		}
-	}
+    /* ─── Product (thumb + title block) ─── */
+    &__product {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        flex: 1 1 auto;
+    }
+
+    &__thumb {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        border-radius: $cartick-r-2;
+        overflow: hidden;
+        background: $cartick-light;
+        border: 1px solid $cartick-border;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    }
+
+    &__title {
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+
+    /* PHP currently emits a typo'd class (missing the trailing "t").
+       Target both so a future fix doesn't lose styling. */
+    &__product-name,
+    .cartick-sticky-car__product-name {
+        font-family: $poppins;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        line-height: 1.3;
+        color: $cartick-heading;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__product-description {
+        font-size: 0.6875rem;
+        line-height: 1.4;
+        color: $cartick-text;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* ─── Price ─── */
+    &__price {
+        flex: 0 0 auto;
+        font-family: $poppins;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: $cartick-heading;
+        white-space: nowrap;
+
+        del {
+            color: $cartick-text;
+            opacity: 0.7;
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        ins {
+            text-decoration: none;
+        }
+
+        .amount {
+            font-family: $poppins;
+        }
+    }
+
+    /* ─── Add-to-cart form ─── */
+    &__form {
+        flex: 0 0 auto;
+
+        .cart {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+
+            .woocommerce-variation {
+                display: none !important;
+            }
+
+            .woocommerce-grouped-product-list {
+                margin: 0;
+
+                td {
+                    padding: 0 12px 0 0;
+                    border: 0;
+                }
+            }
+
+            table.variations {
+                margin: 0;
+
+                tbody {
+                    display: flex;
+                    gap: 12px;
+                    align-items: center;
+                }
+
+                td,
+                th {
+                    border: 0;
+                    padding: 0;
+                }
+
+                label {
+                    margin: 0;
+                    font-size: 0.6875rem;
+                    color: $cartick-text;
+                }
+
+                select {
+                    height: 32px;
+                    padding: 0 28px 0 10px;
+                    border: 1px solid $cartick-border;
+                    border-radius: $cartick-r-1;
+                    background: $cartick-light;
+                    font-family: $nunito;
+                    font-size: 0.8125rem;
+                    color: $cartick-heading;
+                }
+            }
+
+            input.qty {
+                width: 56px;
+                height: 36px;
+                padding: 0 8px;
+                border: 1px solid $cartick-border;
+                border-radius: $cartick-r-2;
+                background: #fff;
+                font-family: $mono;
+                font-size: 0.8125rem;
+                font-weight: 600;
+                color: $cartick-heading;
+                text-align: center;
+                outline: none;
+                transition: border-color 120ms, box-shadow 120ms;
+
+                &:focus {
+                    border-color: $cartick-primary;
+                    box-shadow: $cartick-focus;
+                }
+            }
+
+            button.button,
+            .single_add_to_cart_button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                height: 38px;
+                padding: 0 16px;
+                border: 0;
+                border-radius: $cartick-r-2;
+                background: $cartick-primary;
+                color: #fff;
+                font-family: $poppins;
+                font-size: 0.8125rem;
+                font-weight: 600;
+                line-height: 1;
+                cursor: pointer;
+                text-decoration: none;
+                margin: 0;
+                box-shadow: 0 4px 12px rgba(107, 102, 247, 0.26);
+                transition: background 160ms, transform 160ms, box-shadow 160ms;
+
+                &:hover {
+                    background: $cartick-primary-700;
+                    transform: translateY(-1px);
+                    box-shadow: 0 6px 16px rgba(107, 102, 247, 0.32);
+                }
+
+                &:focus-visible {
+                    outline: none;
+                    box-shadow: $cartick-focus;
+                }
+
+                &.disabled,
+                &[disabled] {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                    pointer-events: none;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
 }
 
+/* Visibility helpers (emitted by PHP). */
 @media screen and (max-width: 768px) {
-	.cartick-sticky-cart {
-		&__wrap {
-			&.hide_mobile {
-				display: none !important;
-			}
-		}
-	}
+    .cartick-sticky-cart__wrap.hide_mobile {
+        display: none !important;
+    }
+
+    .cartick-sticky-cart {
+        &__wrap {
+            padding: 8px 14px;
+            gap: 10px;
+        }
+
+        &__thumb {
+            width: 36px;
+            height: 36px;
+        }
+
+        &__product-description,
+        .cartick-sticky-car__product-name + & {
+            display: none;
+        }
+
+        &__form .cart button.button,
+        &__form .cart .single_add_to_cart_button {
+            height: 36px;
+            padding: 0 12px;
+            font-size: 0.75rem;
+        }
+    }
+}
+
+/* Drop the thumbnail under 480px to give name + button room. */
+@media screen and (max-width: 480px) {
+    .cartick-sticky-cart__thumb {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 768px) {
-	.cartick-sticky-cart {
-		&__wrap {
-			&.hide_desktop {
-				display: none !important;
-			}
-		}
-	}
+    .cartick-sticky-cart__wrap.hide_desktop {
+        display: none !important;
+    }
 }

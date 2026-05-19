@@ -19,7 +19,7 @@ html.cartick-oc-lock-scroll body {
         z-index: 9999;
         pointer-events: none;
 
-        /* Overlay sits inside the wrap and stays transparent until .show. */
+        /* Scrim — transparent until .show. */
         &::before {
             content: "";
             position: absolute;
@@ -31,6 +31,7 @@ html.cartick-oc-lock-scroll body {
 
         &.show {
             pointer-events: auto;
+
             &::before {
                 background: rgba(20, 23, 27, 0.42);
             }
@@ -53,7 +54,7 @@ html.cartick-oc-lock-scroll body {
         display: flex;
         flex-direction: column;
         color: $cartick-heading;
-        box-shadow: 0 14px 40px rgba(20, 23, 27, 0.18);
+        box-shadow: $cartick-sh-drawer;
         transform: translateX(-100%);
         transition: transform var(--cartick-oc-anim, 0.4s) cubic-bezier(0.22, 0.61, 0.36, 1);
         pointer-events: auto;
@@ -68,6 +69,7 @@ html.cartick-oc-lock-scroll body {
         right: 0;
         transform: translateX(100%);
     }
+
     .cartick-oc-cart-wrap.cartick-oc-position-right.show .cartick-oc-cart-content-wrap {
         transform: translateX(0);
     }
@@ -87,13 +89,18 @@ html.cartick-oc-lock-scroll body {
         background: var(--cartick-oc-btn-bg, #{$cartick-primary});
         color: var(--cartick-oc-btn-color, #{$white});
         cursor: pointer;
-        box-shadow: 0 6px 18px rgba($cartick-primary, 0.32);
+        box-shadow: $cartick-sh-trigger;
         transition: transform 160ms ease, box-shadow 160ms ease;
         pointer-events: auto;
 
         &:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 26px rgba($cartick-primary, 0.4);
+            box-shadow: 0 10px 26px rgba(107, 102, 247, 0.45);
+        }
+
+        &:focus-visible {
+            outline: none;
+            box-shadow: $cartick-sh-trigger, $cartick-focus;
         }
 
         svg {
@@ -103,28 +110,30 @@ html.cartick-oc-lock-scroll body {
         }
     }
 
-    /* Anchor the trigger by wrap-class. */
-    .cartick-oc-cart-wrap.cartick-oc-btn-top-left    .cartick-oc-cart-btn { top: 40px;    left: 40px;  right: auto; bottom: auto; }
-    .cartick-oc-cart-wrap.cartick-oc-btn-top-right   .cartick-oc-cart-btn { top: 40px;    right: 40px; left: auto;  bottom: auto; }
-    .cartick-oc-cart-wrap.cartick-oc-btn-bottom-left  .cartick-oc-cart-btn { bottom: 40px; left: 40px;  right: auto; top: auto;    }
-    .cartick-oc-cart-wrap.cartick-oc-btn-bottom-right .cartick-oc-cart-btn { bottom: 40px; right: 40px; left: auto;  top: auto;    }
+    /* Trigger position by wrap-class. */
+    .cartick-oc-cart-wrap.cartick-oc-btn-top-left     .cartick-oc-cart-btn { top: 24px;    left: 24px;  right: auto; bottom: auto; }
+    .cartick-oc-cart-wrap.cartick-oc-btn-top-right    .cartick-oc-cart-btn { top: 24px;    right: 24px; left: auto;  bottom: auto; }
+    .cartick-oc-cart-wrap.cartick-oc-btn-bottom-left  .cartick-oc-cart-btn { bottom: 24px; left: 24px;  right: auto; top: auto;    }
+    .cartick-oc-cart-wrap.cartick-oc-btn-bottom-right .cartick-oc-cart-btn { bottom: 24px; right: 24px; left: auto;  top: auto;    }
 
-    /* Count badge — sits on the trigger. */
+    /* Count badge — inverted pill on the trigger.
+       White face + primary text + primary border so it pops against
+       the trigger's primary background. */
     .cartick-oc-cart-count {
         position: absolute;
-        top: -4px;
-        right: -4px;
-        min-width: 22px;
-        height: 22px;
-        padding: 0 6px;
+        top: -3px;
+        right: -3px;
+        min-width: 20px;
+        height: 20px;
+        padding: 0 5px;
         font-family: $poppins;
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 700;
-        line-height: 22px;
-        color: #fff;
-        background: $cartick-error;
-        border: 2px solid #fff;
-        border-radius: 999px;
+        line-height: 20px;
+        color: var(--cartick-oc-btn-bg, #{$cartick-primary});
+        background: #fff;
+        border-radius: $cartick-r-pill;
+        box-shadow: inset 0 0 0 1.5px var(--cartick-oc-btn-bg, #{$cartick-primary});
         text-align: center;
 
         &.is-empty {
@@ -132,9 +141,32 @@ html.cartick-oc-lock-scroll body {
         }
     }
 
-    /* Push admin bar (frontend logged-in) clear of the drawer top. */
+    /* Mobile — trim trigger size, snug to corner. */
+    @media (max-width: 480px) {
+        .cartick-oc-cart-btn {
+            width: 48px;
+            height: 48px;
+
+            svg {
+                width: 22px;
+                height: 22px;
+            }
+        }
+
+        .cartick-oc-cart-wrap.cartick-oc-btn-top-left     .cartick-oc-cart-btn { top: 16px;    left: 16px;  }
+        .cartick-oc-cart-wrap.cartick-oc-btn-top-right    .cartick-oc-cart-btn { top: 16px;    right: 16px; }
+        .cartick-oc-cart-wrap.cartick-oc-btn-bottom-left  .cartick-oc-cart-btn { bottom: 16px; left: 16px;  }
+        .cartick-oc-cart-wrap.cartick-oc-btn-bottom-right .cartick-oc-cart-btn { bottom: 16px; right: 16px; }
+    }
 }
 
+/* Push drawer top below WP admin bar when logged in. */
 .admin-bar .cartick-wrap .cartick-oc-cart-content-wrap {
     top: 32px;
+}
+
+@media (max-width: 782px) {
+    .admin-bar .cartick-wrap .cartick-oc-cart-content-wrap {
+        top: 46px;
+    }
 }

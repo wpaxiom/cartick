@@ -1,78 +1,73 @@
-.mini-cart {
-    position: relative;
-}
+/*
+// -------------------------------------------- //
+//        MENU CART  ·  Widget in WP menu       //
+//   Inherits typography & color from the host
+//   theme; only count + total get branded.
+// -------------------------------------------- //
+*/
 
-.mini-cart-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    width: 250px;
-    background-color: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    z-index: 9999;
-}
-
-.mini-cart-dropdown.show {
-    display: block;
-}
-
-.cart-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.cart-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.cart-item img {
-    width: 50px;
-    height: auto;
-    margin-right: 10px;
-}
-
-.cart-total {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    font-weight: bold;
-}
-
-.cart-buttons {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-}
-
-.button {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: #333;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 3px;
-}
-
-.button:hover {
-    background-color: #555;
+.cartick-mc-cart-inner {
+    display: inline-flex;
 }
 
 .cartick-mc-cart-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    line-height: 1.4;
+    text-decoration: none;
+    color: inherit;
+    transition: color 120ms;
 
-    * {
-        line-height: 1.5;
+    &:hover {
+        color: $cartick-primary;
+    }
+
+    /* Icon — inherits color, so menus with white-on-dark text get a
+       white icon. Width is fixed but height auto-aligns to text. */
+    > svg {
+        width: 20px;
+        height: 20px;
+        flex: 0 0 auto;
+
+        path {
+            fill: currentColor;
+        }
     }
 }
 
+/* Count — small brand-tinted pill. */
+.cartick-mc-cart-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 20px;
+    padding: 0 7px;
+    font-family: $nunito;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    color: $cartick-primary-700;
+    background: $cartick-light2;
+    border-radius: $cartick-r-pill;
+    white-space: nowrap;
+}
+
+/* Total — Poppins, slightly weightier than the surrounding menu text. */
+.cartick-mc-cart-total {
+    font-family: $poppins;
+    font-weight: 600;
+    font-size: inherit;
+    color: inherit;
+    white-space: nowrap;
+
+    .amount {
+        font-family: $poppins;
+    }
+}
+
+/* Alignment helpers (emitted by PHP via .cartick-align-{left|default|right}). */
 .cartick-align {
     &-left {
         text-align: left;

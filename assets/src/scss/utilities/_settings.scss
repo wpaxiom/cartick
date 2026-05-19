@@ -9,6 +9,7 @@
 //
 $poppins: 'Poppins', sans-serif;
 $nunito: 'Nunito', sans-serif;
+$mono:   'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
 //
 // Cartick font sizes & line-heights
@@ -18,7 +19,7 @@ $cartick-heading-line-height: 1.5;
 $heading-line-height: 1.2;
 
 //
-// Cartick Colors
+// Cartick Colors — brand
 //
 $white: #FFFFFF;
 $cartick-heading: #1A171B;
@@ -26,18 +27,52 @@ $cartick-text: #8E9BAF;
 $cartick-light: #FBFCFD;
 $cartick-light2: #F0F0FE;
 $cartick-primary: #6B66F7;
+$cartick-primary-700: #4F49E4;
 $cartick-secondary: #B366F6;
 
 $cartick-border: #F1F1F1;
 
+//
+// Neutral ramp (4 steps between border and heading)
+//
+$cartick-neutral-100: #F7F8FA;
+$cartick-neutral-200: #ECEEF2;
+$cartick-neutral-300: #D6DAE3;
+$cartick-neutral-400: #59616E;
+
+//
+// Semantic — base + tint
+//
 $cartick-info: #C89D27;
-$cartick-info-light: #FFF5EB;
+$cartick-info-light: #FBF3DD;
 
 $cartick-success: #008067;
-$cartick-success-light: #E8FCF3;
+$cartick-success-light: #E5F3F0;
 
 $cartick-error: #C64123;
-$cartick-error-light: #FFF2F2;
+$cartick-error-light: #FBEAE5;
+
+//
+// Radius
+//
+$cartick-r-1: 4px;    // inputs, segmented
+$cartick-r-2: 6px;    // cards, toggles container
+$cartick-r-3: 8px;    // drawer line items, CTAs
+$cartick-r-pill: 999px;
+
+//
+// Shadows
+//
+$cartick-sh-card:        0 1px 2px rgba(20,23,27,0.04), 0 1px 0 rgba(20,23,27,0.02);
+$cartick-sh-card-hover:  0 4px 14px rgba(20,23,27,0.06), 0 1px 2px rgba(20,23,27,0.04);
+$cartick-sh-drawer:      0 14px 40px rgba(20,23,27,0.18);
+$cartick-sh-trigger:     0 6px 18px rgba(107,102,247,0.32);
+$cartick-sh-pop:         0 8px 24px rgba(20,23,27,0.10), 0 1px 2px rgba(20,23,27,0.06);
+
+//
+// Focus ring (use as `box-shadow: $cartick-focus;`)
+//
+$cartick-focus: 0 0 0 3px rgba(107,102,247,0.28);
 
 //
 // Cartick padding & margin

@@ -13,13 +13,13 @@
         position: relative;
         width: 32px;
         height: 18px;
-        background: #d6d6e1;
-        border-radius: 999px;
+        background: $cartick-neutral-300;
+        border-radius: $cartick-r-pill;
         border: 0;
         padding: 0;
         flex-shrink: 0;
         cursor: pointer;
-        transition: background 120ms;
+        transition: background 160ms ease;
 
         &::after {
             content: '';
@@ -30,22 +30,25 @@
             height: 14px;
             background: #fff;
             border-radius: 50%;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            transition: left 140ms;
+            box-shadow: 0 1px 2px rgba(20, 23, 27, 0.18);
+            transition: transform 160ms cubic-bezier(.22,.61,.36,1);
         }
 
         &.is-on {
             background: $cartick-primary;
 
             &::after {
-                left: 16px;
+                transform: translateX(14px);
             }
         }
 
-        &:focus,
-        &:hover {
+        &:focus {
             outline: none;
             box-shadow: none;
+        }
+
+        &:focus-visible {
+            box-shadow: $cartick-focus;
         }
 
         &--lg {
@@ -55,28 +58,64 @@
             &::after {
                 width: 18px;
                 height: 18px;
+                top: 2px;
+                left: 2px;
             }
 
             &.is-on::after {
-                left: 18px;
+                transform: translateX(16px);
             }
         }
     }
 
+    /* Status dot — shared with stats bar + card foot */
+    .cartick-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: $cartick-neutral-300;
+        flex: 0 0 auto;
+
+        &.is-on  { background: $cartick-success; }
+        &.is-off { background: $cartick-neutral-300; }
+    }
+
+    /* Pill chip — used in stats bar */
+    .cartick-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 24px;
+        padding: 0 10px;
+        border-radius: $cartick-r-pill;
+        background: $cartick-neutral-100;
+        font-size: 11px;
+        font-weight: 600;
+        color: $cartick-heading;
+
+        &__mono {
+            font-family: $mono;
+            font-size: 11px;
+            font-weight: 500;
+        }
+    }
+
+    /* ─── Feature card ─── */
     .cartick-fcard {
-        background: $cartick-light;
+        background: #fff;
         border: 1px solid $cartick-border;
-        border-radius: 6px;
-        padding: 16px;
+        border-radius: $cartick-r-2;
+        padding: 20px;
         display: flex;
         flex-direction: column;
-        gap: 8px;
-        min-height: 138px;
-        transition: border-color 120ms, box-shadow 120ms;
+        gap: 12px;
+        min-height: 168px;
+        transition: border-color 160ms, box-shadow 160ms;
 
         &:hover {
-            border-color: rgba($cartick-primary, 0.3);
-            box-shadow: 0 1px 4px rgba($cartick-heading, 0.04);
+            border-color: $cartick-neutral-200;
+            box-shadow: $cartick-sh-card-hover;
         }
 
         &.is-off {
@@ -90,6 +129,33 @@
             gap: 10px;
         }
 
+        &__icon {
+            width: 36px;
+            height: 36px;
+            border-radius: $cartick-r-3;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            transition: background 160ms, color 160ms;
+
+            &.is-on {
+                background: $cartick-light2;
+                color: $cartick-primary;
+            }
+
+            &.is-off {
+                background: $cartick-neutral-100;
+                color: $cartick-neutral-400;
+            }
+        }
+
+        &__body {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
         &__title {
             font-family: $poppins;
             font-size: 14px;
@@ -101,8 +167,9 @@
 
         &__desc {
             color: $cartick-text;
-            font-size: 12.5px;
-            line-height: 1.45;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.5;
             margin: 0;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -115,25 +182,41 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-top: 8px;
+            padding-top: 4px;
+        }
+
+        &__status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: $nunito;
+            font-size: 11px;
+            font-weight: 600;
+            color: $cartick-text;
+            letter-spacing: 0.02em;
+
+            &.is-on {
+                color: $cartick-success;
+            }
         }
 
         &__configure {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             background: transparent;
             border: 0;
             padding: 0;
-            color: $cartick-primary;
-            font-family: $nunito;
-            font-size: 12.5px;
+            color: $cartick-primary-700;
+            font-family: $poppins;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             line-height: 1;
+            text-decoration: none;
 
             &:hover {
-                color: darken($cartick-primary, 8%);
+                color: $cartick-primary;
 
                 .cartick-fcard__configure-arrow {
                     transform: translateX(2px);
@@ -144,12 +227,17 @@
                 outline: none;
                 box-shadow: none;
             }
+
+            &:focus-visible {
+                box-shadow: $cartick-focus;
+                border-radius: 3px;
+            }
         }
 
         &__configure-arrow {
             display: inline-block;
             flex-shrink: 0;
-            transition: transform 120ms;
+            transition: transform 160ms;
             stroke: currentColor;
         }
     }
