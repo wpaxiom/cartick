@@ -85,6 +85,17 @@ class Cartick_Settings_Rest_Route {
 			'off_canvas_cart' => array(
 				'oc_status',
 				'oc_position',
+				'oc_width',
+				'oc_title',
+				'oc_btn_position',
+				'oc_btn_bg',
+				'oc_btn_color',
+				'oc_auto_open',
+				'oc_anim_speed',
+				'oc_show_count_in_header',
+				'oc_show_images',
+				'oc_empty_text',
+				'oc_continue_url',
 			),
 			'menu_cart'       => array(
 				'mc_status',
@@ -134,6 +145,12 @@ class Cartick_Settings_Rest_Route {
 		}
 
 		update_option('cartick_options', $options);
+
+		// The admin still writes the legacy blob, but the frontend reads
+		// per-module rows + the modules-enabled registry. Sync them on every
+		// save so toggles/values take effect immediately.
+		( new \WpAxiom\Cartick\Core\Migrator( 'cartick', cartick()->settings_manager() ) )
+			->sync_blob_to_per_module();
 
 		return rest_ensure_response('successfully updated');
 	}

@@ -1,0 +1,140 @@
+/*
+// -------------------------------------------- //
+//      OFF CANVAS CART  ·  Drawer + Trigger    //
+// -------------------------------------------- //
+*/
+
+/* Lock the page scroll while the drawer is open. */
+html.cartick-oc-lock-scroll,
+html.cartick-oc-lock-scroll body {
+    overflow: hidden;
+}
+
+.cartick-wrap {
+    font-size: 16px;
+
+    .cartick-oc-cart-wrap {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+
+        /* Overlay sits inside the wrap and stays transparent until .show. */
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(20, 23, 27, 0);
+            transition: background var(--cartick-oc-anim, 0.4s) ease;
+            pointer-events: none;
+        }
+
+        &.show {
+            pointer-events: auto;
+            &::before {
+                background: rgba(20, 23, 27, 0.42);
+            }
+        }
+    }
+
+    .cartick-oc-cart-inner {
+        height: 100%;
+    }
+
+    /* ─── Drawer panel ─── */
+    .cartick-oc-cart-content-wrap {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: var(--cartick-oc-width, 380px);
+        max-width: 100vw;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        color: $cartick-heading;
+        box-shadow: 0 14px 40px rgba(20, 23, 27, 0.18);
+        transform: translateX(-100%);
+        transition: transform var(--cartick-oc-anim, 0.4s) cubic-bezier(0.22, 0.61, 0.36, 1);
+        pointer-events: auto;
+    }
+
+    .cartick-oc-cart-wrap.show .cartick-oc-cart-content-wrap {
+        transform: translateX(0);
+    }
+
+    .cartick-oc-cart-wrap.cartick-oc-position-right .cartick-oc-cart-content-wrap {
+        left: auto;
+        right: 0;
+        transform: translateX(100%);
+    }
+    .cartick-oc-cart-wrap.cartick-oc-position-right.show .cartick-oc-cart-content-wrap {
+        transform: translateX(0);
+    }
+
+    /* ─── Trigger button (floating) ─── */
+    .cartick-oc-cart-btn {
+        position: fixed;
+        z-index: 111;
+        width: 56px;
+        height: 56px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--cartick-oc-btn-bg, #{$cartick-primary});
+        color: var(--cartick-oc-btn-color, #{$white});
+        cursor: pointer;
+        box-shadow: 0 6px 18px rgba($cartick-primary, 0.32);
+        transition: transform 160ms ease, box-shadow 160ms ease;
+        pointer-events: auto;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 26px rgba($cartick-primary, 0.4);
+        }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            display: block;
+        }
+    }
+
+    /* Anchor the trigger by wrap-class. */
+    .cartick-oc-cart-wrap.cartick-oc-btn-top-left    .cartick-oc-cart-btn { top: 40px;    left: 40px;  right: auto; bottom: auto; }
+    .cartick-oc-cart-wrap.cartick-oc-btn-top-right   .cartick-oc-cart-btn { top: 40px;    right: 40px; left: auto;  bottom: auto; }
+    .cartick-oc-cart-wrap.cartick-oc-btn-bottom-left  .cartick-oc-cart-btn { bottom: 40px; left: 40px;  right: auto; top: auto;    }
+    .cartick-oc-cart-wrap.cartick-oc-btn-bottom-right .cartick-oc-cart-btn { bottom: 40px; right: 40px; left: auto;  top: auto;    }
+
+    /* Count badge — sits on the trigger. */
+    .cartick-oc-cart-count {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        min-width: 22px;
+        height: 22px;
+        padding: 0 6px;
+        font-family: $poppins;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 22px;
+        color: #fff;
+        background: $cartick-error;
+        border: 2px solid #fff;
+        border-radius: 999px;
+        text-align: center;
+
+        &.is-empty {
+            display: none;
+        }
+    }
+
+    /* Push admin bar (frontend logged-in) clear of the drawer top. */
+}
+
+.admin-bar .cartick-wrap .cartick-oc-cart-content-wrap {
+    top: 32px;
+}

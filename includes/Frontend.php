@@ -12,6 +12,7 @@
 namespace WpAxiom\Cartick;
 
 use WpAxiom\Cartick\Modules\Sticky_Cart\Module as Sticky_Cart_Module;
+use WpAxiom\Cartick\Modules\Off_Canvas_Cart\Module as Off_Canvas_Cart_Module;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -28,7 +29,8 @@ class Frontend {
 		wp_enqueue_script( 'cartick-script', CARTICK_ASSETS . '/dist/js/cartick.js', array( 'jquery' ), CARTICK_VERSION, true );
 
 		wp_localize_script( 'cartick-script', 'cartickSettings', array(
-			'sc_offset' => self::sticky_cart_scroll_offset(),
+			'sc_offset'     => self::sticky_cart_scroll_offset(),
+			'oc_auto_open'  => self::oc_auto_open(),
 		) );
 	}
 
@@ -39,5 +41,14 @@ class Frontend {
 			return 0;
 		}
 		return (int) $module->get_setting( 'scroll_offset' );
+	}
+
+	private static function oc_auto_open(): bool {
+		$registry = cartick()->module_registry();
+		$module   = $registry->get( Off_Canvas_Cart_Module::id() );
+		if ( ! $module instanceof Off_Canvas_Cart_Module ) {
+			return false;
+		}
+		return (bool) $module->get_setting( 'auto_open' );
 	}
 }

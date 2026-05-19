@@ -33,22 +33,22 @@ class Migrator {
 		}
 
 		if ( $current < 1 ) {
-			$this->migrate_blob_to_per_module();
+			$this->sync_blob_to_per_module();
 		}
 
 		update_option( $this->version_option_key(), self::TARGET_VERSION, true );
 	}
 
 	/**
-	 * Split the legacy `cartick_options` blob into per-module rows.
+	 * Copy values from the legacy `cartick_options` blob into the per-module
+	 * rows + the modules-enabled registry. Runs on first upgrade (via run())
+	 * AND after every admin save so the frontend (which reads per-module
+	 * storage) stays in sync with the legacy blob the admin still writes.
 	 *
-	 * Legacy shape: cartick_options[ <module_key> ][ <prefixed_setting> ].
-	 * New shape:    cartick_module_<module_key> = [ <unprefixed_setting> => value ].
-	 *
-	 * The original `cartick_options` row is left intact for one release as a
-	 * fallback so users can roll back if needed.
+	 * Legacy shape: cartick_options[ <blob_key> ][ <prefixed_setting> ].
+	 * New shape:    cartick_module_<module_id> = [ <unprefixed_setting> => value ].
 	 */
-	private function migrate_blob_to_per_module(): void {
+	public function sync_blob_to_per_module(): void {
 		$legacy = get_option( 'cartick_options' );
 		if ( ! is_array( $legacy ) ) {
 			return;
@@ -70,9 +70,10 @@ class Migrator {
 				}
 			}
 
-			// Enable flag comes from the legacy *_status field if present.
-			if ( isset( $spec['status_key'] ) && ! empty( $source[ $spec['status_key'] ] ) ) {
-				$this->settings_manager->set_module_enabled( $module_id, true );
+			// Enable flag mirrors the legacy *_status field — both directions,
+			// so disabling in admin actually disables the module.
+			if ( isset( $spec['status_key'] ) && array_key_exists( $spec['status_key'], $source ) ) {
+				$this->settings_manager->set_module_enabled( $module_id, ! empty( $source[ $spec['status_key'] ] ) );
 			}
 
 			if ( ! empty( $translated ) ) {
@@ -155,7 +156,18 @@ class Migrator {
 				'blob_key'   => 'off_canvas_cart',
 				'status_key' => 'oc_status',
 				'keys'       => array(
-					'oc_position' => 'position',
+					'oc_position'             => 'position',
+					'oc_width'                => 'width',
+					'oc_title'                => 'title',
+					'oc_btn_position'         => 'btn_position',
+					'oc_btn_bg'               => 'btn_bg',
+					'oc_btn_color'            => 'btn_color',
+					'oc_auto_open'            => 'auto_open',
+					'oc_anim_speed'           => 'anim_speed',
+					'oc_show_count_in_header' => 'show_count_in_header',
+					'oc_show_images'          => 'show_images',
+					'oc_empty_text'           => 'empty_text',
+					'oc_continue_url'         => 'continue_url',
 				),
 			),
 		);
