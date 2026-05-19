@@ -25,6 +25,20 @@
             top: 0;
             border-bottom: 1px solid $cartick-border;
             box-shadow: 0 1px 0 rgba(20, 23, 27, 0.04);
+
+            /* Push below the WordPress admin bar for logged-in users so
+               the top-positioned bar isn't hidden behind it. WP renders
+               the bar at 32px on desktop and 46px below the 783px
+               breakpoint. */
+            body.admin-bar & {
+                top: 32px;
+            }
+
+            @media screen and (max-width: 782px) {
+                body.admin-bar & {
+                    top: 46px;
+                }
+            }
         }
 
         &.bottom {
@@ -67,10 +81,7 @@
         gap: 1px;
     }
 
-    /* PHP currently emits a typo'd class (missing the trailing "t").
-       Target both so a future fix doesn't lose styling. */
-    &__product-name,
-    .cartick-sticky-car__product-name {
+    &__product-name {
         font-family: $poppins;
         font-size: 0.8125rem;
         font-weight: 600;
@@ -129,17 +140,171 @@
                 display: none !important;
             }
 
-            .woocommerce-grouped-product-list {
+            /* ─── Grouped product list ─── */
+            /* WC renders a <table.group_table> with rows of
+               [qty | name | price]. Default table-cell semantics ignore
+               our gap / align-items. Flex rows fix vertical alignment
+               but each row independently sizes its cells — so prices
+               with different widths (e.g. plain vs sale-priced with
+               strikethrough) make columns wander.
+               Use a CSS grid on the tbody with shared column tracks so
+               every row's qty/name/price align vertically as proper
+               columns. `display: contents` on the tr flattens it so its
+               cells become direct children of the tbody grid. */
+            .woocommerce-grouped-product-list,
+            table.group_table {
                 margin: 0;
+                border: 0;
+                border-collapse: collapse;
+                background: transparent;
+
+                tbody {
+                    display: grid;
+                    grid-template-columns: auto 1fr auto;
+                    column-gap: 12px;
+                    row-gap: 6px;
+                    align-items: center;
+                    background: transparent;
+                }
+
+                tr {
+                    display: contents;
+                }
 
                 td {
-                    padding: 0 12px 0 0;
+                    padding: 0;
+                    margin: 0;
                     border: 0;
+                    background: transparent;
                 }
+
+                /* Qty cell — fixed width to keep the column tidy across rows. */
+                .woocommerce-grouped-product-list-item__quantity {
+                    justify-self: start;
+
+                    .quantity {
+                        margin: 0;
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                    }
+
+                    label {
+                        font-family: $nunito;
+                        font-size: 0.6875rem;
+                        font-weight: 600;
+                        letter-spacing: 0.04em;
+                        color: $cartick-text;
+                        text-transform: uppercase;
+                        margin: 0;
+                    }
+
+                    /* Match the simple-product qty style but slightly narrower
+                       so a row of grouped items fits in the bar. */
+                    input,
+                    input.qty,
+                    input.input-text,
+                    input.input-text.qty {
+                        width: 56px;
+                        height: 32px;
+                        padding: 0 6px;
+                        border: 1px solid $cartick-border;
+                        border-radius: $cartick-r-2;
+                        background: #fff;
+                        font-family: $mono;
+                        font-size: 0.8125rem;
+                        font-weight: 600;
+                        color: $cartick-heading;
+                        text-align: center;
+                        outline: none;
+                        transition: border-color 120ms, box-shadow 120ms;
+
+                        &:focus {
+                            border-color: $cartick-primary;
+                            box-shadow: $cartick-focus;
+                        }
+                    }
+                }
+
+                /* Name cell — fills the middle column. Capped so long
+                   names truncate instead of pushing the bar wider. */
+                .woocommerce-grouped-product-list-item__label {
+                    justify-self: start;
+                    min-width: 0;
+                    max-width: 220px;
+
+                    label,
+                    label a,
+                    a {
+                        font-family: $poppins;
+                        font-size: 0.8125rem;
+                        font-weight: 600;
+                        color: $cartick-heading;
+                        text-decoration: none;
+                        margin: 0;
+                        line-height: 1.3;
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 100%;
+                        transition: color 120ms;
+
+                        &:hover {
+                            color: $cartick-primary;
+                        }
+                    }
+                }
+
+                /* Price cell — right-justified within a min-width so the
+                   right edge of every row's price column lines up
+                   regardless of price width (regular vs sale-priced). */
+                .woocommerce-grouped-product-list-item__price {
+                    justify-self: end;
+                    min-width: 88px;
+                    text-align: right;
+                    font-family: $poppins;
+                    font-size: 0.8125rem;
+                    font-weight: 600;
+                    color: $cartick-heading;
+                    white-space: nowrap;
+
+                    .amount {
+                        font-family: $poppins;
+                    }
+
+                    del {
+                        color: $cartick-text;
+                        opacity: 0.7;
+                        font-weight: 500;
+                        margin-right: 4px;
+                    }
+
+                    ins {
+                        text-decoration: none;
+                    }
+
+                    /* "Out of stock" notice WC emits in place of a price */
+                    .stock {
+                        font-family: $nunito;
+                        font-size: 0.6875rem;
+                        font-weight: 600;
+                        color: $cartick-error;
+                        text-transform: uppercase;
+                        letter-spacing: 0.04em;
+                    }
+                }
+            }
+
+            /* Grouped form root — keep the multi-row table vertically
+               centred with the trailing Add-to-cart button. */
+            &.grouped_form {
+                align-items: center;
             }
 
             table.variations {
                 margin: 0;
+                border: 0;
 
                 tbody {
                     display: flex;
@@ -147,16 +312,40 @@
                     align-items: center;
                 }
 
+                tr {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    border: 0;
+                    background: transparent;
+                }
+
                 td,
                 th {
                     border: 0;
                     padding: 0;
+                    background: transparent;
+                    vertical-align: middle;
+                }
+
+                th.label,
+                td.label {
+                    font-family: $nunito;
+                    font-size: 0.6875rem;
+                    font-weight: 600;
+                    letter-spacing: 0.04em;
+                    color: $cartick-text;
+                    text-transform: uppercase;
                 }
 
                 label {
                     margin: 0;
+                    font-family: $nunito;
                     font-size: 0.6875rem;
+                    font-weight: 600;
+                    letter-spacing: 0.04em;
                     color: $cartick-text;
+                    text-transform: uppercase;
                 }
 
                 select {
@@ -167,7 +356,87 @@
                     background: $cartick-light;
                     font-family: $nunito;
                     font-size: 0.8125rem;
+                    font-weight: 500;
                     color: $cartick-heading;
+                    outline: none;
+                    transition: border-color 120ms, box-shadow 120ms, background 120ms;
+
+                    &:hover {
+                        border-color: $cartick-neutral-300;
+                        background: #fff;
+                    }
+
+                    &:focus {
+                        border-color: $cartick-primary;
+                        background: #fff;
+                        box-shadow: $cartick-focus;
+                    }
+                }
+            }
+
+            /* "Clear" link that appears once a variation is picked.
+               WC renders it inline next to the dropdowns; the theme's
+               default link styling (often blue + underline) clashes
+               with our scheme. */
+            .reset_variations {
+                display: inline-flex;
+                align-items: center;
+                height: 32px;
+                padding: 0 8px;
+                font-family: $poppins;
+                font-size: 0.75rem;
+                font-weight: 600;
+                color: $cartick-text;
+                text-decoration: none;
+                border-radius: $cartick-r-1;
+                transition: color 120ms, background 120ms;
+
+                &:hover,
+                &:focus-visible {
+                    color: $cartick-primary-700;
+                    background: $cartick-neutral-100;
+                    text-decoration: none;
+                }
+
+                &[style*="visibility: hidden"] {
+                    /* WC toggles visibility:hidden when no variation is
+                       picked. Collapse the layout space too so the bar
+                       doesn't have a phantom gap. */
+                    display: none !important;
+                }
+            }
+
+            /* Variable product: WC wraps qty + button in
+               .single_variation_wrap > .variations_button (both block by
+               default), which pushes the button onto its own row.
+               Flatten them into the bar's flex row. */
+            .single_variation_wrap {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                margin: 0;
+            }
+
+            .single_variation {
+                /* Price after variation selection — already shown in the
+                   bar's __price block, so hide this duplicate. */
+                display: none !important;
+            }
+
+            .woocommerce-variation-add-to-cart,
+            .variations_button {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                margin: 0;
+                padding: 0;
+                opacity: 1;
+
+                /* WC adds `.variations_button.woocommerce-variation-add-to-cart-disabled`
+                   while waiting for a complete variation pick. Dim it. */
+                &.woocommerce-variation-add-to-cart-disabled {
+                    opacity: 0.55;
+                    pointer-events: none;
                 }
             }
 

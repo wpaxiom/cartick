@@ -15,7 +15,7 @@ class Migrator {
 	private Settings_Manager $settings_manager;
 
 	/** Bump when adding a new migration step. */
-	private const TARGET_VERSION = 3;
+	private const TARGET_VERSION = 4;
 
 	public function __construct( string $prefix, Settings_Manager $settings_manager ) {
 		$this->prefix           = $prefix;
@@ -97,6 +97,23 @@ class Migrator {
 			$this->sync_blob_to_per_module();
 		}
 
+		if ( $current < 4 ) {
+			// v3 already wiped per-module rows once, but the sync that
+			// rebuilt them stored booleans as "1" or "" (because
+			// sanitize_text_field(false) === ""). The frontend's boolean
+			// reads then collapsed both "deliberate off" and "never set"
+			// into the same falsy value — most visibly, the Sticky Cart's
+			// is_enabled_for_type() returned false for every product type,
+			// so the bar never rendered after enabling the module.
+			//
+			// Re-wipe + re-sync so the new bool-normalising sync logic
+			// (above) writes "1"/"0" explicitly.
+			foreach ( array_keys( $this->legacy_setting_map() ) as $module_id ) {
+				delete_option( $this->settings_manager->module_settings_key( $module_id ) );
+			}
+			$this->sync_blob_to_per_module();
+		}
+
 		update_option( $this->version_option_key(), self::TARGET_VERSION, true );
 	}
 
@@ -124,18 +141,29 @@ class Migrator {
 			$source    = $legacy[ $spec['blob_key'] ];
 			$bool_keys = $spec['bool_keys'] ?? array();
 
-			// Translate old keys → new keys. Empty non-boolean values are
-			// skipped so the per-module row stays absent for those fields,
-			// letting Core\Module::get_setting() fall back to the schema
-			// default. (Booleans are kept because sanitize_text_field(false)
-			// produces "" — losing them would resurrect a deliberate "off".)
+			// Translate old keys → new keys.
+			//
+			// Booleans are normalised to "1" or "0" (never ""). Reason:
+			// sanitize_text_field(false) returns "" — same as "field never
+			// set" — so without normalisation the frontend can't distinguish
+			// deliberate-off from missing, and (bool) "" → false causes
+			// schema defaults of `true` to silently lose. After this pass:
+			//   "1" → true, "0" → false (deliberate off), null → default.
+			//
+			// Empty non-boolean values are skipped so the per-module row
+			// stays absent for those fields, letting get_setting() fall back
+			// to the schema default.
 			$translated = array();
 			foreach ( $spec['keys'] as $old_key => $new_key ) {
 				if ( ! array_key_exists( $old_key, $source ) ) {
 					continue;
 				}
 				$value = $source[ $old_key ];
-				if ( '' === $value && ! in_array( $old_key, $bool_keys, true ) ) {
+				if ( in_array( $old_key, $bool_keys, true ) ) {
+					$translated[ $new_key ] = empty( $value ) ? '0' : '1';
+					continue;
+				}
+				if ( '' === $value ) {
 					continue;
 				}
 				$translated[ $new_key ] = $value;

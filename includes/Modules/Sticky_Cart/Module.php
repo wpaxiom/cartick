@@ -44,7 +44,10 @@ class Module extends Core_Module {
 	}
 
 	public function register(): void {
-		add_action( 'woocommerce_after_single_product', array( $this, 'render' ) );
+		// wp_footer is universal — fires on every page regardless of theme.
+		// woocommerce_after_single_product is theme-emitted and can be missing
+		// in block themes or heavily-customised templates.
+		add_action( 'wp_footer', array( $this, 'render' ) );
 	}
 
 	public function render(): void {
@@ -52,7 +55,7 @@ class Module extends Core_Module {
 			return;
 		}
 
-		global $post, $product;
+		$product = wc_get_product( get_queried_object_id() );
 
 		if ( ! ( $product instanceof \WC_Product ) ) {
 			return;
@@ -66,8 +69,16 @@ class Module extends Core_Module {
 			return;
 		}
 
+		// Always emit a position class (top/bottom) — falling back to
+		// 'bottom' if the stored value is somehow unrecognised. Without
+		// this the SCSS leaves the bar with `position: fixed` but no
+		// top/bottom anchor, so it sits at the document origin and is
+		// effectively invisible behind other content.
+		$position    = $this->get_setting( 'position' );
+		$position    = in_array( $position, array( 'top', 'bottom' ), true ) ? $position : 'bottom';
+
 		$classes = array_filter( array(
-			$this->get_setting( 'position' ),
+			$position,
 			$this->get_setting( 'show_on_scroll' ) ? 'show_on_scroll' : '',
 			$this->get_setting( 'show_on_desktop' ) ? '' : 'hide_desktop',
 			$this->get_setting( 'show_on_mobile' ) ? '' : 'hide_mobile',
@@ -76,18 +87,31 @@ class Module extends Core_Module {
 		$classes = apply_filters( 'cartick_sc_classes', $classes );
 		$classes = implode( ' ', array_unique( array_filter( $classes ) ) );
 
-		$product     = wc_get_product( $post->ID );
-		$product_img = wp_get_attachment_url( $product->get_image_id() );
+		$product_id = $product->get_id();
+
+		/*
+		 * WC's add-to-cart templates rely on $GLOBALS['product'] and
+		 * $GLOBALS['post']. In wp_footer (where we render to guarantee
+		 * theme-independence) the main loop has already ended, so those
+		 * globals may be null or stale — and that produces a form with
+		 * `value=""` for the add-to-cart hidden input, which silently
+		 * fails on submit. Set them ourselves for the duration of the
+		 * render and restore so we don't pollute downstream code.
+		 */
+		$previous_product = $GLOBALS['product'] ?? null;
+		$previous_post    = $GLOBALS['post']    ?? null;
+		$GLOBALS['product'] = $product;
+		$GLOBALS['post']    = get_post( $product_id );
 		?>
-		<div id="cartick-sticky-cart product-<?php the_ID(); ?>" class="cartick-sticky-cart__wrap <?php echo esc_attr( $classes ); ?>">
+		<div id="cartick-sticky-cart-<?php echo esc_attr( $product_id ); ?>" class="cartick-sticky-cart__wrap <?php echo esc_attr( $classes ); ?>">
 			<div class="cartick-sticky-cart__product">
 				<?php if ( $this->get_setting( 'show_image' ) ) : ?>
 					<div class="cartick-sticky-cart__thumb">
-						<img src="<?php echo esc_url( $product_img ); ?>" alt="<?php echo esc_attr( $product->get_name() ); ?>">
+						<?php echo $product->get_image( 'woocommerce_thumbnail' ); /* phpcs:ignore — WC returns a safe <img> tag with srcset. */ ?>
 					</div>
 				<?php endif; ?>
 				<div class="cartick-sticky-cart__title">
-					<div class="cartick-sticky-car__product-name"><?php echo esc_html( $product->get_name() ); ?></div>
+					<div class="cartick-sticky-cart__product-name"><?php echo esc_html( $product->get_name() ); ?></div>
 					<div class="cartick-sticky-cart__product-description"><?php echo esc_html( wp_trim_words( $product->get_short_description(), 5, ' ...' ) ); ?></div>
 				</div>
 			</div>
@@ -103,6 +127,9 @@ class Module extends Core_Module {
 			</div>
 		</div>
 		<?php
+		// Restore prior globals.
+		$GLOBALS['product'] = $previous_product;
+		$GLOBALS['post']    = $previous_post;
 	}
 
 	private function is_enabled_for_type( string $type ): bool {
